@@ -1,18 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const bcrypt = require('bcrypt');
 
 router.get('/', (req, res) => {
-  res.render('auth/login', {
-    message: req.session.message
-  });
+  // res.render('auth/login', {
+  //   message: req.session.message
+  // });
+  res.send('auth controller');
 });
-
 
 // Find user
 router.post('/login', (req, res) => {
   
-User.findOne({username: req.body.username}, (err, user) => {
+  User.findOne({username: req.body.username}, (err, user) => {
     if(user){
       // if user was found
       if(bcrypt.compareSync(req.body.password, user.password)){
@@ -30,7 +31,7 @@ User.findOne({username: req.body.username}, (err, user) => {
   });
 });
 
-module.exports = router;
+
 // HASH Password
 router.post('/register', (req, res) => {
   const password = req.body.password;
@@ -62,3 +63,4 @@ router.get('/logout', (req, res) => {
 });
 
 
+module.exports = router;

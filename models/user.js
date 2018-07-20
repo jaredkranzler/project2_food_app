@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   username: String,
-  password: String
+  password: String,
+  admin: {
+    type: Boolean,
+    default: false,
+  },
   creditCard: {
     name: String,
     ccNum: Number,

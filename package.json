@@ -1,0 +1,27 @@
+{
+  "name": "project2_food_app",
+  "version": "1.0.0",
+  "description": "by: Jared Kranzler & Steve Brennison",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaredkranzler/project2_food_app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaredkranzler/project2_food_app/issues"
+  },
+  "homepage": "https://github.com/jaredkranzler/project2_food_app#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.2.4"
+  }
+}

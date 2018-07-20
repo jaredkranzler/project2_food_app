@@ -3,7 +3,6 @@
 by: Jared Kranzler & Steve Brennison
 
 ##User Stories
-##____________
 * User can Register.
 * User can Login.
 * User can see recomendations on home page.
@@ -15,7 +14,6 @@ by: Jared Kranzler & Steve Brennison
 * User can see past orders
 
 ##MVP
-##___
 * User register
 * User Login
 * User can Navigate

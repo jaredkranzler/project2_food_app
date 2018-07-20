@@ -35,19 +35,33 @@ by: Jared Kranzler & Steve Brennison
 ![alt text](https://github.com/jaredkranzler/project2_food_app/blob/master/Wireframe/6-Confirm.png)
 
 ```
-itemSchema:
+itemSchema({
   title: String,
   image: String,
-  body: String
+  body: String,
   price: Number
+})
 
-userSchema:
-  username: String,
-  password: String,
+orderSchema({
+  orderDate: date,
+  item: [itemSchema]
+})
+
+userSchema({
+  username: (type: String, required: true},
+  password: (type: String, required: true},
+  firstName: (type: String, required: true},
+  lastename: (type: String, required: true},
+  address: (type: String, required: true},
+  apt: String,
+  city: (type: String, required: true},
+  state: (type: String, required: true},
+  zipcode: (type: String, required: true},
   creditCard: {
-    name: String,
-    ccNum: Number,
-    expDate: Date,
-    secNum: Number
+    name: (type: String, required: true},
+    ccNum: (type: String, required: true},
+    expDate: (type: String, required: true},
+    secNum: (type: String, required: true}
   }
+})
 ```

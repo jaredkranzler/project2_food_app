@@ -25,3 +25,19 @@ by: Jared Kranzler & Steve Brennison
 
 
 ![alt text](https://github.com/jaredkranzler/project2_food_app/blob/master/Wireframe/wireframe.jpg)
+
+itemSchema:
+  title: String,
+  image: String,
+  body: String
+  price: Number
+
+userSchema:
+  username: String,
+  password: String,
+  creditCard: {
+    name: String,
+    ccNum: Number,
+    expDate: Date,
+    secNum: Number
+    }

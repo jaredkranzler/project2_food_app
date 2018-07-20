@@ -34,7 +34,7 @@ by: Jared Kranzler & Steve Brennison
 
 ![alt text](https://github.com/jaredkranzler/project2_food_app/blob/master/Wireframe/6-Confirm.png)
 
-
+```
 itemSchema:
   title: String,
   image: String,
@@ -49,4 +49,5 @@ userSchema:
     ccNum: Number,
     expDate: Date,
     secNum: Number
-    }
+  }
+```

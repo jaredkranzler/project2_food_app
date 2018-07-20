@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <h4>Login</h4>
+  <form action="/auth/login" method="POST"> <!-- link to index??? -->
+    Username: <input type="text" name="username" placeholder="username"><br>
+    Password: <input type="password" name="password"><br>
+    <button type="submit">Login</button>
+  </form><br>
+
+  <form action="/auth" method="POST">
+    <button>No login? Register</button>    
+  </form>
+
+
+  <h5><%= message%></h5>
+
+</body>
+</html>
+

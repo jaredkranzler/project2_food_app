@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session'); // for login
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const PORT = 3000;
 
 // db connection code
@@ -15,6 +16,7 @@ app.use(session({
 }));
 
 app.use(bodyParser.urlencoded({extended: false}));
+
 
 // controllers
 const userController = require('./controllers/auth');

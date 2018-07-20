@@ -16,6 +16,22 @@ router.get('/register', (req, res) => {
   });
 });
 
+User.create(
+  {username: 'admin',
+   password: 'password'
+  }, (err, resUser) => {
+    if(err){
+      console.log(err)
+    } else {
+      console.log(resUser)
+    }
+  });
+
+if (resUser.username === admin){
+  res.redirect('/auth/new.ejs')
+  // make an admin new.ejs page
+}
+
 // Find user
 router.post('/login', (req, res) => {
   

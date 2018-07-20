@@ -1,0 +1,19 @@
+<%- include('../partials/header'); -%>
+
+<h2>Your Cart</h2>
+
+
+<ul>
+      <% for (let i = 0; i < potions.length; i++) { %>
+          <li>
+            <%=items[i].name%>
+              <button class="buttonRemove" type="submit">Remove from Cart</button>     
+            </a>
+          </li>
+      <% } %>
+  </ul>
+
+
+
+
+<%- include('../partials/footer'); -%>

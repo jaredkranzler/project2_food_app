@@ -65,3 +65,22 @@ userSchema({
   }
 })
 ```
+
+views directory--->
+---> home.ejs
+  ---> items directory
+      ---> menu.ejs
+
+  ---> orders directory
+      ---> cart.ejs
+      ---> checkout.ejs
+      ---> orderConfirmed.ejs
+
+  ---> auth directory
+      ---> profile.ejs
+      ---> updateConfirmed.ejs
+      ---> register.ejs
+      ---> login.ejs
+
+
+

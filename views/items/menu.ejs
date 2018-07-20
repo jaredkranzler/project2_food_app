@@ -1,0 +1,26 @@
+  <%- include('../partials/header'); -%>
+
+  <h1>this is the menu page</h1>
+
+    <h2>Appetizers</h2>
+
+  <ul>
+      <% for (let i = 0; i < items.length; i++) { %>
+          <li>
+              <h4><%= items[i].name %></h4>
+              <form action="../order/cart<%=i%>?_method=put" method="POST" >
+              <button class="add" type="submit">add to order</button>     
+            </a>
+          </li>
+      <% } %>
+  </ul>
+
+
+
+
+
+
+
+
+
+  <%- include('../partials/footer'); -%>

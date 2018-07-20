@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const session = require('express-session'); // for login
+const bodyParser = require('body-parser');
 const PORT = 3000;
 
 // db connection code
@@ -13,13 +14,15 @@ app.use(session({
   saveUninitialized: false // useful for login session, we only want to save when we modify the session
 }));
 
+app.use(bodyParser.urlencoded({extended: false}));
+
 // controllers
 const userController = require('./controllers/auth');
 app.use('/auth', userController);
 
 // default route
 app.get('/', (req, res) => {
-  res.send('restauirant site')
+  res.send('restaurant site')
 });
 
 

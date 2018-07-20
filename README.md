@@ -24,4 +24,4 @@ by: Jared Kranzler & Steve Brennison
 * User can add info to profile
 
 
-![Alt text](relative/path/to/wireframe.jpg?raw=true "Wireframe")
+![alt text](https://github.com/jaredkranzler/project2_food_app/blob/master/Wireframe/wireframe.jpg)

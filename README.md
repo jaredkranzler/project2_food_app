@@ -22,7 +22,18 @@ by: Jared Kranzler & Steve Brennison
 * User can add info to profile
 
 
-![alt text](https://github.com/jaredkranzler/project2_food_app/blob/master/Wireframe/wireframe.jpg)
+![alt text](https://github.com/jaredkranzler/project2_food_app/blob/master/Wireframe/1-Home.png)
+
+![alt text](https://github.com/jaredkranzler/project2_food_app/blob/master/Wireframe/2-Menu.png)
+
+![alt text](https://github.com/jaredkranzler/project2_food_app/blob/master/Wireframe/3-Cart.png)
+
+![alt text](https://github.com/jaredkranzler/project2_food_app/blob/master/Wireframe/4-Checkout.png)
+
+![alt text](https://github.com/jaredkranzler/project2_food_app/blob/master/Wireframe/5-Profile.png)
+
+![alt text](https://github.com/jaredkranzler/project2_food_app/blob/master/Wireframe/6-Confirm.png)
+
 
 itemSchema:
   title: String,

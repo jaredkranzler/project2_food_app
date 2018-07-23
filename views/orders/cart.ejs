@@ -8,13 +8,11 @@
           <li>
             <%=orders[i].name%>
 
-            <button action="/orders/<%=order.id%>?_method=DELETE" method="POST' type="submit">Remove from Cart</button> 
+            <button action="/orders/<%=orders.id%>?_method=DELETE" method="POST' type="submit">Remove from Cart</button> 
 
           </li>
       <% } %>
   </ul>
-
-
 
 
 <%- include('../partials/footer'); -%>

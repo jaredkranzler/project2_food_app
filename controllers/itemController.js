@@ -69,7 +69,7 @@ router.get('/', (req, res) => {
 
 
 router.get('/add', (req, res) => {
-    res.render('items/add.ejs')
+    res.render('/items/add')
 })
 
 

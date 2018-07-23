@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Order = require('./order');
 
 const userSchema = new mongoose.Schema({
   username: String,
@@ -12,7 +13,9 @@ const userSchema = new mongoose.Schema({
     ccNum: Number,
     expDate: Date,
     secNum: Number
-  }
+  },
+  orders: [Order.schema]
 });
+
 
 module.exports = mongoose.model('User', userSchema);

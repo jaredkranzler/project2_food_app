@@ -7,9 +7,11 @@
   <ul>
       <% for (let i = 0; i < items.length; i++) { %>
           <li>
-              <h4><%= items[i].name %></h4>
-              <form action="/orders" method="POST" >
-              <button class="add" type="submit">add to order</button>     
+              
+              <form action="/orders" method="POST">
+                <input type="hidden" name="<%=items[i].name %>"><%=items[i].name %></input>
+                <button class="add" type="submit">add to order</button>     
+              </form>
             </a>
           </li>
       <% } %>
@@ -17,19 +19,6 @@
 
 
 
- <ul>
-      <% for (let i = 0; i < items.length; i++) { %>
-          <li>
-              <h4><%= items[i].name %></h4>
-            </a>
-          </li>
-      <% } %>
-  </ul>
-
-<form action="/items" method="POST">
-  <input type="text" name="name">
-  <button>add</button>
-</form>
 
 
 

@@ -31,7 +31,6 @@ router.get('/login', (request, response) => {
   }
 });
 
-
 router.get('/register', (request, response) => {
   if(request.session.message) {
     const message = request.session.message;
@@ -45,7 +44,6 @@ router.get('/register', (request, response) => {
     });
   }
 });
-
 
 
 // Find user
@@ -88,9 +86,10 @@ router.post('/register', (request, response) => {
 
   // PREVENT DUPE USERNAMES
   // if a user exists in the db with the desired username
-  User.find({username: request.body.username}, (err, foundUser) => {
-    if(foundUser){
-      console.log('this is the register page')
+  User.find({username: request.body.username}, (err, foundUsers) => {
+    // now we know that .find() returns an array
+    console.log(foundUsers)
+    if(foundUsers.length > 0){
       // show the registration page with a message that says "username already taken"
       request.session.message = 'Username already exists';
       response.redirect('/auth/register');
@@ -115,7 +114,7 @@ router.get('/logout', (request, response) => {
     if(err) {
       response.send('error destroying session');
     } else {
-      response.redirect('/auth/login');
+      response.redirect('/login');
     }
   });
 });

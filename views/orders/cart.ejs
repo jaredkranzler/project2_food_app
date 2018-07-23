@@ -4,11 +4,12 @@
 
 
 <ul>
-      <% for (let i = 0; i < potions.length; i++) { %>
+      <% for (let i = 0; i < orders.length; i++) { %>
           <li>
-            <%=items[i].name%>
-              <button class="buttonRemove" type="submit">Remove from Cart</button>     
-            </a>
+            <%=orders[i].name%>
+
+            <button action="/orders/<%=order.id%>?_method=DELETE" method="POST' type="submit">Remove from Cart</button> 
+
           </li>
       <% } %>
   </ul>

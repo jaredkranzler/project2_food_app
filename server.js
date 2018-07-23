@@ -24,6 +24,9 @@ const itemController = require('./controllers/itemController.js')
 app.use('/items', itemController);
 const userController = require('./controllers/auth');
 app.use('/auth', userController);
+const orderController = require('./controllers/orderController.js');
+app.use('/orders', orderController);
+
 
 
 

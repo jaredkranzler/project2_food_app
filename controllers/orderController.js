@@ -5,45 +5,45 @@ const router  = express.Router();
 // Require the model
 const Order  = require('../models/order');
 const Item = require('../models/item');
-
+const User = require('../models/user')
 //-------------------------------------------------------------------------
 
 // CART: (order show page) 
-router.get('/', async (req, res) => {
-  try {
-
-    // if (req.session.loggedIn === true) {
-    // const foundOrder = await Order.find({})
-    // const foundItems = await Item.findById(req.params.id); 
-
-
-    // get the items from the current order
-    
-
+router.get('/', (req, res) => {
+  Order.findById(req.params.id, (err, foundOrder) => {
     res.render('orders/cart.ejs', {
-      items: foundItems
-      // username: req.session.username[0]
+      order: foundOrder
     });
-
-    // } else {
-    //   req.session.message = "you have to be Logged In"
-    //   res.redirect('/auth/login')
-    // }
-
-  } catch (err) {
-
-    res.send('error at index route', err)
-  }
+  });
 });
 
 // order index page -- order history
 // and/or open orders
 
-// router.get('/', (req, res) => {
-//   Order.findById(req.params.id, (err, foundOrder) => {
-//     res.render('orders/show.ejs')
-//   })
-// })
+router.get('/', (req, res) => {
+  Order.findById(req.params.id, (err, foundOrder) => {
+    res.render('orders/show.ejs')
+  })
+})
+
+
+
+
+// Edit
+
+router.get('/:id', async (req, res) => {
+
+  try {
+
+    const foundOrder = await  Order.findById(req.params.id);
+    res.render('orders/cart.ejs', {
+      order: foundOrder
+    });
+  } catch (err) {
+
+    res.send(err)
+  }
+});
 
 //--------------------------------------------------------------------------------------
 // PUT (UPDATE)

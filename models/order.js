@@ -4,6 +4,7 @@ const Item = require('./item');
 
 const orderSchema = mongoose.Schema({
   orderDate: Date,
+  newOrder: Boolean, 
   items: [Item.schema]
 })
 

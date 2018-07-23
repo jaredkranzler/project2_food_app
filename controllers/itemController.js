@@ -5,6 +5,7 @@ const router  = express.Router();
 // require the model
 const Item  = require('../models/item')
 const Order = require('../models/order')
+const User = require('../models/user')
 //-------------------------------------------------------
 // router.get('/:id', (req, res) => {
 //   res.render('home.ejs', { theNumber: req.params.id })

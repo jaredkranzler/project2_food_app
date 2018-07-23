@@ -6,8 +6,11 @@ const router  = express.Router();
 const Item  = require('../models/item')
 const Order = require('../models/order')
 //-------------------------------------------------------
-router.get('/:id', (req, res) => {
-  res.render('home.ejs', { theNumber: req.params.id })
+router.get('/:id', (request, res) => {
+  res.render('home.ejs', { 
+      username: request.session.username,
+      loggedIn: request.session.loggedIn
+  })
 })
 
 //-------------------------------------------------------
@@ -17,13 +20,16 @@ router.get('/:id', (req, res) => {
 /// seed route pre-populate your database with food items
 // '/seed'
 // Menu Index
-router.get('/', (req, res) => {
+router.get('/', (request, response) => {
   Item.find({}, (err, theItems) => {
-    res.render('items/menu.ejs', {
-      items: theItems
-    })
-  })
-})
+    response.render('items/menu.ejs', {
+      items: theItems,
+      username: request.session.username,
+      loggedIn: request.session.loggedIn
+    });
+  });
+});
+
 
 // router.post('/', (req, res) => {
 //   Item.create(req.body, (err, createdItem) => {
@@ -69,14 +75,20 @@ router.get('/', (req, res) => {
 
 
 router.get('/add', (req, res) => {
-    res.render('/items/add')
-})
-
+    if (req.session.username === 'admin'){
+      res.render('/edit', {
+        username: request.session.username,
+        loggedIn: request.session.loggedIn
+      })
+    } else {
+      res.redirect('/items/add')
+  }
+});
 
 
 
 router.post('/', async  (req, res) => {
-  try{
+  try {
     // need to connect to admin
     // create new item, push in to menu
     const foundUser = await User.findById(req.body);
@@ -85,34 +97,24 @@ router.post('/', async  (req, res) => {
     foundUser.items.push(createdItem);
     const data = await foundUser.save()
       res.redirect('/items')
-
-
   } catch (err){
     res.send(err)
   }
-})
+});
+
 
 router.delete('/:id', async (req, res) => {
-  
   try {
-
     const foundItem   = await Item.findByIdAndRemove(req.params.id);
     const foundOrder  = await Order.findOne({'items._id': req.params.id})
     
     foundOrder.items.id(req.params.id).remove();
     const data = await foundOrder.save()
     res.redirect('/items')
-
   } catch (err){
-
     res.send(err)
   }
 });
-
-
-
-
-
 
 
 module.exports = router;

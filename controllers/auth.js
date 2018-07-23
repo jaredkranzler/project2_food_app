@@ -50,9 +50,8 @@ router.get('/register', (request, response) => {
 router.post('/login', (request, response) => {
   
   User.findOne({username: request.body.username}, (err, user) => {
-    if(user){
-      // if user was found
-      if(bcrypt.compareSync(request.body.password, user.password)){
+    if(user){ // if user was found
+      if(bcrypt.compareSync(request.body.password, user.password)) {
         request.session.username = user.username;
         request.session.loggedIn = true;
         response.redirect('/') 
@@ -114,7 +113,7 @@ router.get('/logout', (request, response) => {
     if(err) {
       response.send('error destroying session');
     } else {
-      response.redirect('/login');
+      response.redirect('/auth/login');
     }
   });
 });

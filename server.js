@@ -30,8 +30,11 @@ app.use('/orders', orderController);
 
 
 
-app.get('/', (req, res) => {
-  res.render('home.ejs', { theNumber: undefined })
+app.get('/', (request, res) => {
+  res.render('home.ejs', { 
+    username: request.session.username,
+    loggedIn: request.session.loggedIn
+  })
 });
 
 

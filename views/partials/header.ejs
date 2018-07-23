@@ -6,16 +6,28 @@
 </head>
 <body>
 <header>
-<section> <a href="/items/add">Profile</a></section>
+<section> 
+  <a href="/items/add">Profile</a>
+  <% if (loggedIn) { -%>
+    <%=username%> <a href="/auth/logout">Logout</a>
+  <% } else { -%>
+    <a href="/auth/login">Login</a><br>
+    <a href="/auth/register">Register</a>
+  <% } -%>
+</section>
 
-  <h1>Restaurateur</h1>
   
   <nav>
     <a href="/">Home</a>
     <a href="/items">Menu</a>
     <a href="/orders">Cart</a>
-    <a href="/logout">Logout</a>
+
   </nav>
 
+  <h1>Restauranteur</h1>
 
 </header>
+
+
+
+

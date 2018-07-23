@@ -9,11 +9,13 @@ const Item = require('../models/item');
 //-------------------------------------------------------------------------
 
 // Orders/CART.ejs (index)
-router.get('/', async (req, res) => {
+router.get('/', async (request, response) => {
   try {
     const foundOrder = await Order.find({})
     res.render('orders/cart.ejs', {
-      orders: foundOrder
+      orders: foundOrder, 
+      username: request.session.username,
+      loggedIn: request.session.loggedIn
     })
 
   } catch (err) {
@@ -23,9 +25,12 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/', (req, res) => {
-  Order.findById(req.params.id, (err, foundOrder) => {
-    res.render('orders/show.ejs')
+router.get('/', (request, response) => {
+  Order.findById(request.params.id, (err, foundOrder) => {
+    response.render('orders/show.ejs', {
+      username: request.session.username,
+      loggedIn: request.session.loggedIn
+    })
   })
 })
 

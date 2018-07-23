@@ -1,0 +1,15 @@
+<%- include('../partials/header'); -%>
+
+<h2>Admin Add to Menu Page</h2>
+
+
+<form action="/items" method="post">
+    <input type="text" name="name" placeholder="item name">
+    <input type="url" name="image" placeholder="image url">
+    <textarea name="body" placeholder="item description"></textarea>
+    <input type="number" name="price" placeholder="price">
+    <input type="submit" value="Add Item to Menu">
+</form>
+
+
+<%- include('../partials/footer'); -%>

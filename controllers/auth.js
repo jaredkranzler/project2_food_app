@@ -6,11 +6,9 @@ const bcrypt = require('bcrypt');
 
 // this route displays the login form 
 router.get('/login', (request, response) => {
-
   // render login page 
   // with message if there was one
   // make sure message doesn't display again
-
 
   // if request.session.message has a value
   if(request.session.message) {
@@ -32,6 +30,7 @@ router.get('/login', (request, response) => {
     }); 
   }
 });
+
 
 router.get('/register', (request, response) => {
   if(request.session.message) {
@@ -58,9 +57,8 @@ router.post('/login', (request, response) => {
       if(bcrypt.compareSync(request.body.password, user.password)){
         request.session.username = user.username;
         request.session.loggedIn = true;
-        response.redirect('/') // <----- what directory??????
+        response.redirect('/') 
       } else {
-
         // set a message property on the request.session object
         request.session.message = 'Username or password is incorrect';
         response.redirect('/auth/login');
@@ -70,6 +68,9 @@ router.post('/login', (request, response) => {
       request.session.message = 'Username or password is incorrect';
       response.redirect('/auth/login')
     }
+    // if(user.username === 'admin'){
+    //   response.redirect('/edit');
+    // }
   });
 });
 

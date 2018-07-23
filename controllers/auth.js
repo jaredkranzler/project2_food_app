@@ -4,84 +4,117 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
 
-router.get('/login', (req, res) => {
-  res.render('auth/login.ejs', {
-    message: req.session.message
-  });
+// this route displays the login form 
+router.get('/login', (request, response) => {
+
+  // render login page 
+  // with message if there was one
+  // make sure message doesn't display again
+
+
+  // if request.session.message has a value
+  if(request.session.message) {
+
+    // capture the message in a variable before we remove it from the session
+    const message = request.session.message
+
+    // remove it so that the message will NOT be displayed a second time
+    request.session.message = null
+
+    // rendering login template with the message that WAS in request.session.message
+    response.render('auth/login.ejs', {
+      message: message
+    })
+  // request.session.message doesnt have a value (or is already null)
+  } else {
+    response.render('auth/login.ejs', {
+      message: null
+    }); 
+  }
 });
 
-router.get('/register', (req, res) => {
-  res.render('auth/register.ejs', {
-    message: req.session.message
-  });
+router.get('/register', (request, response) => {
+  if(request.session.message) {
+    const message = request.session.message;
+    request.session.message = null
+    response.render('auth/register.ejs', {
+      message: message
+    });
+  } else {
+    response.render('auth/register.ejs', {
+      message: null
+    });
+  }
 });
 
-// // Admin function
-// User.create(
-//   {username: 'admin',
-//    password: 'password'
-//   }, (err, resUser) => {
-//     if(err){
-//       console.log(err)
-//     } else {
-//       console.log(resUser)
-//     }
-//   });
 
-// if (resUser.username === admin){
-//   res.redirect('/auth/new.ejs')
-//   // make an admin new.ejs page
-// }
 
 // Find user
-router.post('/login', (req, res) => {
+router.post('/login', (request, response) => {
   
-  User.findOne({username: req.body.username}, (err, user) => {
+  User.findOne({username: request.body.username}, (err, user) => {
     if(user){
       // if user was found
-      if(bcrypt.compareSync(req.body.password, user.password)){
-        req.session.username = user.username;
-        req.session.loggedIn = true;
-        res.redirect('/home') // <----- what directory??????
+      if(bcrypt.compareSync(request.body.password, user.password)){
+        request.session.username = user.username;
+        request.session.loggedIn = true;
+        response.redirect('/') // <----- what directory??????
       } else {
-        req.session.message = 'Username or password is incorrect';
-        res.redirect('/auth/login');
+
+        // set a message property on the request.session object
+        request.session.message = 'Username or password is incorrect';
+        response.redirect('/auth/login');
       }
     } else {
-      req.session.message = 'Username or password is incorrect';
-      res.redirect('/auth/login')
+      // set a message property on the request.session object
+      request.session.message = 'Username or password is incorrect';
+      response.redirect('/auth/login')
     }
   });
 });
 
 
 // Register route and HASH Password
-router.post('/register', (req, res) => {
-  const password = req.body.password;
+router.post('/register', (request, response) => {
+  const password = request.body.password;
   const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
   // Create an object to enter into the user model
   const userDbEntry = {};
-  userDbEntry.username = req.body.username;
+  userDbEntry.username = request.body.username;
   userDbEntry.password = passwordHash;
 
-  // Create entry into database
-  User.create(userDbEntry, (err, user) => {
-    req.session.username = user.username;
-    req.session.loggedIn = true;
-    console.log("registration successful")
-    res.redirect('/home') // <----- what directory??????
-  });
+
+  // PREVENT DUPE USERNAMES
+  // if a user exists in the db with the desired username
+  User.find({username: request.body.username}, (err, foundUser) => {
+    if(foundUser){
+      console.log('this is the register page')
+      // show the registration page with a message that says "username already taken"
+      request.session.message = 'Username already exists';
+      response.redirect('/auth/register');
+    } 
+    // (a user does not already exist in the db with that username)
+    else {
+      // Create entry into database
+      User.create(userDbEntry, (err, user) => {
+        request.session.username = user.username;
+        request.session.loggedIn = true;
+        console.log("registration successful");
+        response.redirect('/'); // REDIRECT SHOULD TAKE A URL
+      });
+    }
+  })
 });
 
 
 // Logging out
-router.get('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if(err){
-      res.send('error destroying session');
+router.get('/logout', (request, response) => {
+  request.session.destroy((err) => {
+    if(err) {
+      response.send('error destroying session');
     } else {
-      res.redirect('/auth');
+      response.redirect('/auth/login');
     }
   });
 });

@@ -10,20 +10,36 @@ const Item = require('../models/item');
 
 // Orders/CART.ejs (index)
 router.get('/', async (request, response) => {
+// CART: (order show page) 
   try {
-    const foundOrder = await Order.find({})
+
+    // if (req.session.loggedIn === true) {
+    // const foundOrder = await Order.find({})
+    // const foundItems = await Item.findById(req.params.id); 
+
+
+    // get the items from the current order
+    
     res.render('orders/cart.ejs', {
       orders: foundOrder, 
       username: request.session.username,
-      loggedIn: request.session.loggedIn
-    })
+      loggedIn: request.session.loggedIn,
+      items: foundItems
+      // username: req.session.username[0]
+    });
 
+    // } else {
+    //   req.session.message = "you have to be Logged In"
+    //   res.redirect('/auth/login')
+    // }
   } catch (err) {
 
     res.send('error at index route', err)
   }
 });
 
+// order index page -- order history
+// and/or open orders
 
 router.get('/', (request, response) => {
   Order.findById(request.params.id, (err, foundOrder) => {
@@ -34,8 +50,10 @@ router.get('/', (request, response) => {
   })
 })
 
+
 //--------------------------------------------------------------------------------------
 // PUT (UPDATE)
+
 router.put('/:id', async (req, res) => {
   try {
     const updatedOrder = await Order.findbyIdAndUpdate(req.params.id, req.body);

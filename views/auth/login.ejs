@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Restauranteur</title>
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
-  <link href="https://fonts.googleapis.com/css?family=Tinos" rel="stylesheet">
-</head>
-<body>
+  <%- include('../partials/header'); -%>
+
   <h4>Login</h4>
   <form action="/auth/login" method="POST"> <!-- link to index??? -->
     Username: <input type="text" name="username" placeholder="username"><br>
@@ -17,6 +11,9 @@
 
 
   <h4><%= message%></h4>
+
+
+  <%- include('../partials/footer'); -%>
 
 </body>
 </html>

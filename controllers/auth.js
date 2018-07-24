@@ -23,12 +23,14 @@ router.get('/login', (request, response) => {
 
     // rendering login template with the message that WAS in request.session.message
     response.render('auth/login.ejs', {
-      message: message
+      message: message, 
+      loggedIn: request.session.loggedIn
     })
   // request.session.message doesnt have a value (or is already null)
   } else {
     response.render('auth/login.ejs', {
-      message: null
+      message: null,
+      loggedIn: request.session.loggedIn
     }); 
   }
 });
@@ -39,11 +41,13 @@ router.get('/register', (request, response) => {
     const message = request.session.message;
     request.session.message = null
     response.render('auth/register.ejs', {
-      message: message
+      message: message,
+      loggedIn: req.session.loggedIn      
     });
   } else {
     response.render('auth/register.ejs', {
-      message: null
+      message: null,
+      loggedIn: request.session.loggedIn    
     });
   }
 });
@@ -108,13 +112,13 @@ router.post('/register', (request, response) => {
   })
 });
 
+
 router.get('/profile', (request, response) => {
   User.find(request.params.id, (err, foundUser)=> {
   response.redirect('/profile')
   user: foundUser
-  })
-})
-
+  });
+});
 
 
 // Logging out

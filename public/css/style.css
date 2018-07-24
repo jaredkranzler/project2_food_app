@@ -2,10 +2,12 @@ body {
   text-align: center;
   font-family: tinos;
   background-color: #E8E6D1;
+  /*background: url("http://i.stack.imgur.com/kb0Zm.jpg");*/
+  background: url("https://www.publicdomainpictures.net/pictures/20000/velka/rough-beige-paper-texture.jpg")
 }
 
-header, footer {
-  background-color: #8E262A;
+header, footer {                            /*alternative color opts*/
+  background-color: rgba(119, 24, 31, .8);  /*8E262A 142, 38, 42; 154, 33, 30*/
   padding: 20px;
 }
 

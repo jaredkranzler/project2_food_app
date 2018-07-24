@@ -73,7 +73,7 @@ router.get('/seed', (req, res) => {
 })
 
 
-router.get('/add', (req, res) => {
+router.get('/add', (request, response) => {
     if (req.session.username === 'admin'){
       res.render('/edit', {
         username: request.session.username,

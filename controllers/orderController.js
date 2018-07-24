@@ -9,32 +9,18 @@ const Item = require('../models/item');
 //-------------------------------------------------------------------------
 
 // Orders/CART.ejs (index)
+// // CART: (order show page) 
 router.get('/', async (request, response) => {
-// CART: (order show page) 
-  try {
-
-    // if (req.session.loggedIn === true) {
-    // const foundOrder = await Order.find({})
-    // const foundItems = await Item.findById(req.params.id); 
-
-
-    // get the items from the current order
-    
-    res.render('orders/cart.ejs', {
+  try{
+    const foundOrder = await Order.find({});
+    response.render('orders/cart.ejs', {
       orders: foundOrder, 
       username: request.session.username,
       loggedIn: request.session.loggedIn,
-      items: foundItems
-      // username: req.session.username[0]
     });
-
-    // } else {
-    //   req.session.message = "you have to be Logged In"
-    //   res.redirect('/auth/login')
-    // }
   } catch (err) {
-
-    res.send('error at index route', err)
+    console.log(err, '<------ ERROR');
+    next(err);
   }
 });
 

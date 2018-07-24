@@ -7,28 +7,30 @@ const Item  = require('../models/item')
 const Order = require('../models/order')
 const User = require('../models/user')
 
-// router.use((req, res, next) => {
-//   if(!admin) redirect
 
-// })
+// router level middleware to keep out everybody but admin
+router.use((req, res, next) => {
+  // if req.session.username != admin
+      // message "naw bra"
+      // redirect
+    next();
+})
 
 
 //-------------------------------------------------------
-router.get('/:id', (request, res) => {
-  res.render('home.ejs', { 
+router.get('/:id', (request, response) => {
+  response.render('home.ejs', { 
       username: request.session.username,
       loggedIn: request.session.loggedIn
   })
 })
+
+
 //-------------------------------------------------------
-
-
-
-/// seed route pre-populate your database with food items
-// '/seed'
 // Menu Index
 router.get('/', (request, response) => {
   Item.find({}, (err, theItems) => {
+
     response.render('items/menu.ejs', {
       items: theItems,
       username: request.session.username,
@@ -38,13 +40,9 @@ router.get('/', (request, response) => {
 });
 
 
-// router.post('/', (req, res) => {
-//   Item.create(req.body, (err, createdItem) => {
-//     res.redirect('/items')
-//   })
-// })
-
-
+// --------------------------------------------------------------------------------
+/// seed route pre-populate your database with food items
+// '/seed'
 router.get('/seed', (req, res) => {
   Item.create([
       {
@@ -81,74 +79,64 @@ router.get('/seed', (req, res) => {
 })
 
 
-
+// --------------------------------------------------------------------------------
 // create route -- add to data
-router.post('/', async (req, res) => {
-    
+router.post('/', async (req, res, next) => {
     try {
 
-      if (req.session.username === 'admin'){
-        const foundAdmin = await User.findById(req.body.userId);
         const createdItem = await Item.create(req.body);
-        foundAdmin.items.push(createdItem);
-        const data = await foundAdmin.save()
-        res.render('items/menu.ejs', {
-          username: req.session.username,
-          loggedIn: req.session.loggedIn
-        })
-      } else {
-        res.redirect('/')
-      }
+        res.redirect('/items')
+
     }  catch (err){
-      res.send(err)
-    }
-});
 
-// UPDATE PUT
-router.put('/:id', async (req, res)=>{
-  
-  try {
-
-    const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, {new: true});
-
-    // Find the user with that photo
-    const foundUser = await User.findOne({'items._id': req.params.id});
-
-      // If the user is the same as it was before
-      // first find the photo and removing, req.params.id = photos id
-      foundUser.Items.id(req.params.id).remove();
-      foundUser.Items.push(updatedItem);
-      const data = await foundUser.save();
-      res.redirect('items/menu.ejs');
-    
-
-  } catch (err) {
-
-    res.send(err)
+      next(err, "hey")
+      
     }
 });
 
 
+// --------------------------------------------------------------------------------
+// DELETE
+router.delete('/:id', async (req, res, next) => {
 
-
-
-
-router.delete('/:id', async (request, response) => {
   try {
     const foundItem   = await Item.findByIdAndRemove(req.params.id);
-    const foundOrder  = await Order.findOne({'items._id': req.params.id})
-    
-    foundOrder.items.id(req.params.id).remove();
-    const data = await foundOrder.save()
     res.redirect('/items')
   } catch (err){
+    next(err)
     res.send(err)
   }
 });
 
 
-module.exports = router;
+// --------------------------------------------------------------------------------
+// UPDATE PUT
+router.put('/:id', async (req, res, next)=>{
+  try {
 
+    const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    // Find the user with that photo
+    const foundUser = await User.findOne({'items._id': req.params.id});
+      // If the user is the same as it was before
+      // first find the photo and removing, req.params.id = photos id
+      foundUser.Items.id(req.params.id).remove();
+      foundUser.Items.push(updatedItem);
+      const data = await foundUser.save();
+      res.redirect('/items');
+
+  } catch (err) {
+    next(err)
+    res.send(err)
+    }
+});
+
+// --------------------------------------------------------------------------------
+
+
+
+// --------------------------------------------------------------------------------
+module.exports = router;
+// --------------------------------------------------------------------------------
 
 
 

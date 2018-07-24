@@ -6,6 +6,13 @@ const router  = express.Router();
 const Item  = require('../models/item')
 const Order = require('../models/order')
 const User = require('../models/user')
+
+// router.use((req, res, next) => {
+//   if(!admin) redirect
+
+// })
+
+
 //-------------------------------------------------------
 router.get('/:id', (request, res) => {
   res.render('home.ejs', { 
@@ -74,32 +81,51 @@ router.get('/seed', (req, res) => {
 })
 
 
-router.get('/add', (request, response) => {
-    if (req.session.username === 'admin'){
-      res.render('/edit', {
-        username: request.session.username,
-        loggedIn: request.session.loggedIn
-      })
-    } else {
-      res.redirect('/items/add')
-  }
+
+// create route -- add to data
+router.post('/', async (req, res) => {
+    
+    try {
+
+      if (req.session.username === 'admin'){
+        const foundAdmin = await User.findById(req.body.userId);
+        const createdItem = await Item.create(req.body);
+        foundAdmin.items.push(createdItem);
+        const data = await foundAdmin.save()
+        res.render('items/menu.ejs', {
+          username: req.session.username,
+          loggedIn: req.session.loggedIn
+        })
+      } else {
+        res.redirect('/')
+      }
+    }  catch (err){
+      res.send(err)
+    }
 });
 
-
-
-router.post('/', async  (req, res) => {
+// UPDATE PUT
+router.put('/:id', async (req, res)=>{
+  
   try {
-    // need to connect to admin
-    // create new item, push in to menu
-    const foundUser = await User.findById(req.body);
 
-    const createdItem = await Item.create(req.body);
-    foundUser.items.push(createdItem);
-    const data = await foundUser.save()
-      res.redirect('/items')
-  } catch (err){
+    const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, {new: true});
+
+    // Find the user with that photo
+    const foundUser = await User.findOne({'items._id': req.params.id});
+
+      // If the user is the same as it was before
+      // first find the photo and removing, req.params.id = photos id
+      foundUser.Items.id(req.params.id).remove();
+      foundUser.Items.push(updatedItem);
+      const data = await foundUser.save();
+      res.redirect('items/menu.ejs');
+    
+
+  } catch (err) {
+
     res.send(err)
-  }
+    }
 });
 
 
@@ -107,10 +133,7 @@ router.post('/', async  (req, res) => {
 
 
 
-
-
-
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (request, response) => {
   try {
     const foundItem   = await Item.findByIdAndRemove(req.params.id);
     const foundOrder  = await Order.findOne({'items._id': req.params.id})

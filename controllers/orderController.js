@@ -8,6 +8,40 @@ const Item = require('../models/item');
 const User = require('../models/user')
 //-------------------------------------------------------------------------
 
+
+router.get('/:id', async (req, res, next)=>{
+
+    try {
+
+     const foundItem = await Item.findById(req.body.id);
+        res.render('orders/menu.ejs', {
+          item: foundItem
+      });
+    } catch (err) {
+
+      next(err)
+    }
+});
+
+
+
+// create route -- add to data
+router.post('/', async (req, res, next) => {
+    try {
+
+        const createdItem = await Order.create(req.body);
+        res.redirect('/orders')
+
+    }  catch (err){
+
+      next(err, "hey")
+      
+    }
+});
+
+
+
+
 // Orders/CART.ejs (index)
 // // CART: (order show page) 
 router.get('/', async (request, response) => {
@@ -37,19 +71,8 @@ router.get('/', (request, response) => {
   })
 })
 
-//--------------------------------------------------------------------------------------
-// PUT (UPDATE)
 
-// CREATE
-router.get('/:id', async (req, res) => {
-  const findUser = await User.findById(req.body.userId)
-  const findOrder = await Order.findById(req.params.id);
-  foundUser.Orders.push(createdOrder);
-  const data = await foundUser.save()
-  res.redirect('orders/cart.ejs', {
-    user: request.session.username,
-  });
-});
+
 
 //--------------------------------------------------------------------------------------
 // PUT (UPDATE)

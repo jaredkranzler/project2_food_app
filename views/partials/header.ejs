@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Restauranteur</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Tinos" rel="stylesheet">
 </head>
@@ -9,7 +9,7 @@
 <header>
 
 <section> 
-
+<a href="/items">Admin</a>
   <a href="/auth/profile">Profile</a>
   <% if (loggedIn) { -%>
     <%=username%> <a href="/auth/logout">Logout</a>
@@ -23,7 +23,7 @@
   
   <nav>
     <a href="/">Home</a>
-    <a href="/items">Menu</a>
+    <a href="/orders/menu">Menu</a>
     <a href="/orders">Cart</a>
   </nav>
 

@@ -108,14 +108,36 @@ router.post('/register', (request, response) => {
   })
 });
 
+
 router.get('/profile', (request, response) => {
-  User.find(request.params.id, (err, foundUser)=> {
-  response.redirect('/profile')
-  user: foundUser
-  })
-})
+        response.render('auth/profile.ejs')
+});
 
 
+
+
+
+router.post('/profile', (request, response) => {
+  const password = request.body.password;
+  const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+
+  // Create an object to enter into the user model
+  const userDbEntry = {};
+  userDbEntry.username = request.body.username;
+  userDbEntry.password = passwordHash;
+
+
+  // PREVENT DUPE USERNAMES
+  // if a user exists in the db with the desired username
+  User.find({username: request.body.username}, (err, foundUsers) => {
+      User.create(userDbEntry, (err, user) => {
+        request.session.username = user.username;
+        request.session.loggedIn = true;
+        console.log("update");
+        response.redirect('auth/profile'); // REDIRECT SHOULD TAKE A URL
+      });
+  });
+});
 
 
 // Logging out

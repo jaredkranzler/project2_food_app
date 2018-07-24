@@ -108,6 +108,13 @@ router.post('/register', (request, response) => {
   })
 });
 
+router.get('/profile', (request, response) => {
+  User.find(request.params.id, (err, foundUser)=> {
+  response.redirect('/profile')
+  user: foundUser
+  })
+})
+
 
 
 
@@ -122,9 +129,9 @@ router.get('/logout', (request, response) => {
   });
 });
 
-router.get('../header', (req, res) => {
-  User.find(req.params.id, (err, foundUser) => {
-    res.render('/partials/header.ejs', {
+router.get('../header', (request, response) => {
+  User.find(request.params.id, (err, foundUser) => {
+    response.render('/partials/header.ejs', {
       users: foundUser
     })
   })

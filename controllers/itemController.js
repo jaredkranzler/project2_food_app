@@ -9,11 +9,11 @@ const User = require('../models/user')
 
 
 // router level middleware to keep out everybody but admin
-router.use((req, res, next) => {
-  // if req.session.username != admin
-      // message "naw bra"
-      // redirect
-    next();
+router.use((request, response, next) => {
+  if (request.session.username !== 'admin'){
+    response.redirect('/')
+  }
+  else next();
 })
 
 

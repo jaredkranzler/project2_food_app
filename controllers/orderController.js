@@ -8,36 +8,18 @@ const Item = require('../models/item');
 const User = require('../models/user')
 //-------------------------------------------------------------------------
 
+// Orders/CART.ejs (index)
+router.get('/', async (request, response) => {
 // CART: (order show page) 
-router.get('/', (req, res) => {
-  Order.findById(req.params.id, (err, foundOrder) => {
-    res.render('orders/cart.ejs', {
-      order: foundOrder
-    });
-  });
-});
-
-// order index page -- order history
-// and/or open orders
-
-router.get('/', (req, res) => {
-  Order.findById(req.params.id, (err, foundOrder) => {
-    res.render('orders/show.ejs')
-  })
-})
-
-
-
-
-// Edit
-
-router.get('/:id', async (req, res) => {
 
   try {
 
-    const foundOrder = await  Order.findById(req.params.id);
+const foundOrder = await Order.findById(req.params.id)
     res.render('orders/cart.ejs', {
-      order: foundOrder
+      orders: foundOrder, 
+      username: request.session.username,
+      loggedIn: request.session.loggedIn,
+      username: req.session.username[0]
     });
   } catch (err) {
 
@@ -45,10 +27,22 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+
+
+router.get('/', (request, response) => {
+  Order.findById(request.params.id, (err, foundOrder) => {
+    response.render('orders/show.ejs', {
+      username: request.session.username,
+      loggedIn: request.session.loggedIn
+    })
+  })
+})
+
+
 //--------------------------------------------------------------------------------------
 // PUT (UPDATE)
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', async (request, response) => {
   try {
     const updatedOrder = await Order.findbyIdAndUpdate(req.params.id, req.body);
     res.redirect('/orders')

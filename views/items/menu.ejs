@@ -2,17 +2,23 @@
 
   <h1>Menu</h1>
 
+
+  
+
     <h2>Appetizers</h2>
 
   <ul>
       <% for (let i = 0; i < items.length; i++) { %>
           <li>
               
-              <form action="/orders" method="POST">
-                <input type="hidden" name="<%=items[i].name %>"><%=items[i].name %></input>
-                <button class="add" type="submit">add to order</button>     
-              </form>
-            </a>
+            <h3><%=items[i].name%></h3>
+            <h3><img src="<%=items[i].image%>"></h3>
+            <h3><%=items[i].body%></h3>
+            <h3><%=items[i].price%></h3>
+
+            <form action="/items/<%=items[i]._id%>?_method=DELETE" method="post">
+              <input type="submit" value="Delete item"/>
+            </form>
           </li>
       <% } %>
   </ul>
@@ -22,6 +28,20 @@
     <h2>Dessert</h2>
 
     <h2>Drinks</h2>
+
+
+
+<form action="/items" method="post">
+    <input type="text" name="name" placeholder="item name">
+    <input type="url" name="image" placeholder="image url">
+    <textarea name="body" placeholder="item description"></textarea>
+    <input type="text" name="price" placeholder="price">
+    <input type="submit" value="Add Item to Menu">
+</form>
+
+
+
+
 
 
 

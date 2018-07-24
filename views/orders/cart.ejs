@@ -1,20 +1,27 @@
 <%- include('../partials/header'); -%>
 
 <h2>Your Cart</h2>
-
-
-<ul>
-      <% for (let i = 0; i < orders.length; i++) { %>
+          
+      
+    <main>
+      <section>
+      <ul>
+        <% for(let i = 0; i < orders.length; i++){ %>
           <li>
-            <%=orders[i].name%>
+          <h1><%=orders[i].name%></h1>
+          
 
-            <form action="/orders/<%=orders[i].id%>?_method=DELETE" method="POST" type="submit">
-              <button>Remove from Cart</button> 
-            </form>
+          <form action="/orders/<%=orders._id%>?_method=DELETE" method="post">
+              <input type="submit" value="Delete item"/>
+          </form>
+          
+        <% } %>
+      </ul>
+      </section>
 
-          </li>
-      <% } %>
-  </ul>
+
+
+    </main>
 
 
 <%- include('../partials/footer'); -%>

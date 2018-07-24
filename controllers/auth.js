@@ -1,7 +1,9 @@
 const express = require('express');
-const router = express.Router();
-const User = require('../models/user');
-const bcrypt = require('bcrypt');
+const router  = express.Router();
+const User    = require('../models/user');
+const Order   = require('../models/order');
+const Item    = require('../models/item');
+const bcrypt  = require('bcrypt');
 
 
 // this route displays the login form 
@@ -107,6 +109,8 @@ router.post('/register', (request, response) => {
 });
 
 
+
+
 // Logging out
 router.get('/logout', (request, response) => {
   request.session.destroy((err) => {
@@ -117,6 +121,14 @@ router.get('/logout', (request, response) => {
     }
   });
 });
+
+router.get('../header', (req, res) => {
+  User.find(req.params.id, (err, foundUser) => {
+    res.render('/partials/header.ejs', {
+      users: foundUser
+    })
+  })
+})
 
 
 module.exports = router;

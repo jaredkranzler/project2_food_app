@@ -32,16 +32,16 @@ app.get('/partials/', (req, res) => {
   User.findById(req.params.id, (err, foundUser)=> {
     res.render('partials/header.ejs', {
       user: foundUser
-    })
-  })
-})
+    });
+  });
+});
 
 
 app.get('/', (request, res) => {
   res.render('home.ejs', { 
     username: request.session.username,
     loggedIn: request.session.loggedIn
-  })
+  });
 });
 
 

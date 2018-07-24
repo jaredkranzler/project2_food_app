@@ -9,21 +9,20 @@ const User = require('../models/user')
 //-------------------------------------------------------------------------
 
 // Orders/CART.ejs (index)
+// // CART: (order show page) 
 router.get('/', async (request, response) => {
-// CART: (order show page) 
 
-  try {
-
-const foundOrder = await Order.findById(req.params.id)
-    res.render('orders/cart.ejs', {
+  try{
+    const foundOrder = await Order.find({});
+    response.render('orders/cart.ejs', {
       orders: foundOrder, 
       username: request.session.username,
       loggedIn: request.session.loggedIn,
-      username: req.session.username[0]
     });
   } catch (err) {
+    console.log(err, '<------ ERROR');
+    next(err);
 
-    res.send(err)
   }
 });
 

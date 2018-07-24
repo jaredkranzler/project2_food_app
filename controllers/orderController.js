@@ -10,32 +10,31 @@ const User = require('../models/user')
 
 // Orders/CART.ejs (index)
 // // CART: (order show page) 
-router.get('/', async (request, response) => {
-
+router.get('/', async (req, res) => {
   try{
     const foundOrder = await Order.find({});
-    response.render('orders/cart.ejs', {
+    res.render('orders/cart.ejs', {
       orders: foundOrder, 
-      username: request.session.username,
-      loggedIn: request.session.loggedIn,
+      username: req.session.username,
+      loggedIn: req.session.loggedIn,
     });
   } catch (err) {
     console.log(err, '<------ ERROR');
     next(err);
-
   }
 });
 
 
 // Show
-router.get('/', (request, response) => {
-  Order.findById(request.params.id, (err, foundOrder) => {
-    response.render('orders/show.ejs', {
-      username: request.session.username,
-      loggedIn: request.session.loggedIn
+router.get('/', (req, res) => {
+  Order.findById(req.params.id, (err, foundOrder) => {
+    res.render('orders/show.ejs', {
+      username: req.session.username,
+      loggedIn: req.session.loggedIn
     })
   })
 })
+
 
 //--------------------------------------------------------------------------------------
 // PUT (UPDATE)
@@ -47,14 +46,15 @@ router.get('/:id', async (req, res) => {
   foundUser.Orders.push(createdOrder);
   const data = await foundUser.save()
   res.redirect('orders/cart.ejs', {
-    user: request.session.username,
+    user: req.session.username,
   });
 });
+
 
 //--------------------------------------------------------------------------------------
 // PUT (UPDATE)
 
-router.put('/:id', async (request, response) => {
+router.put('/:id', async (req, res) => {
   try {
     const updatedOrder = await Order.findbyIdAndUpdate(req.params.id, req.body);
     const foundUser = await User.findOne({'order._id': req.params.id})
@@ -69,23 +69,9 @@ router.put('/:id', async (request, response) => {
 });
 
 
-//--------------------------------------------------------------------------------------
-// POST (CREATE)
-// router.post('/', async (req, res) => {
-//   try {
-//     const createdOrder = await Order.create(req.body);
-//     res.redirect('/orders')
-
-//   } catch (err){
-//     res.send(err, 'post error in order')
-//   }
-// })
 
 //--------------------------------------------------------------------------------------
 // DELETE
-
-
-
 
 router.delete('/:id', async (req, res) => {
   try {

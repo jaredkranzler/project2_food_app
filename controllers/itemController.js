@@ -3,36 +3,34 @@ const router  = express.Router();
 
 // ------------------------------------------------------
 // require the model
-const Item  = require('../models/item')
-const Order = require('../models/order')
-const User = require('../models/user')
+const Item  = require('../models/item');
+const Order = require('../models/order');
+const User = require('../models/user');
 
 // router.use((req, res, next) => {
 //   if(!admin) redirect
-
 // })
 
 
 //-------------------------------------------------------
-router.get('/:id', (request, res) => {
+router.get('/:id', (req, res) => {
   res.render('home.ejs', { 
-      username: request.session.username,
-      loggedIn: request.session.loggedIn
-  })
-})
+      username: req.session.username,
+      loggedIn: req.session.loggedIn
+  });
+});
 //-------------------------------------------------------
-
 
 
 /// seed route pre-populate your database with food items
 // '/seed'
 // Menu Index
-router.get('/', (request, response) => {
+router.get('/', (req, res) => {
   Item.find({}, (err, theItems) => {
-    response.render('items/menu.ejs', {
+    res.render('items/menu.ejs', {
       items: theItems,
-      username: request.session.username,
-      loggedIn: request.session.loggedIn
+      username: req.session.username,
+      loggedIn: req.session.loggedIn
     });
   });
 });
@@ -76,39 +74,36 @@ router.get('/seed', (req, res) => {
   },
     ], (err, addItem) => {
       res.send('items added')
-
-  })
-})
+  });
+});
 
 
 
 // create route -- add to data
 router.post('/', async (req, res) => {
-    
     try {
-
-      if (req.session.username === 'admin'){
+      // if (req.session.username === 'admin'){
         const foundAdmin = await User.findById(req.body.userId);
         const createdItem = await Item.create(req.body);
         foundAdmin.items.push(createdItem);
-        const data = await foundAdmin.save()
-        res.render('items/menu.ejs', {
+        const data = await foundAdmin.save();
+        res.redirect('/items', {
           username: req.session.username,
           loggedIn: req.session.loggedIn
         })
-      } else {
-        res.redirect('/')
-      }
+      // } else {
+      //   res.redirect('/')
+      // }
     }  catch (err){
-      res.send(err)
+      res.send(err);
     }
 });
 
+
+
 // UPDATE PUT
 router.put('/:id', async (req, res)=>{
-  
   try {
-
     const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, {new: true});
 
     // Find the user with that photo
@@ -120,28 +115,24 @@ router.put('/:id', async (req, res)=>{
       foundUser.Items.push(updatedItem);
       const data = await foundUser.save();
       res.redirect('items/menu.ejs');
-    
-
   } catch (err) {
-
     res.send(err)
     }
 });
 
 
 
-
-
-
-router.delete('/:id', async (request, response) => {
+// Delete route
+router.delete('/:id', async (req, res) => {
   try {
-    const foundItem   = await Item.findByIdAndRemove(req.params.id);
-    const foundOrder  = await Order.findOne({'items._id': req.params.id})
     
-    foundOrder.items.id(req.params.id).remove();
-    const data = await foundOrder.save()
+    const foundUser  = await User.findOne({'items._id': req.params.id})
+    const foundItem   = await Item.findByIdAndRemove(req.params.id);
+    
+    foundUser.items.id(req.params.id).remove();
+    const data = await foundUser.save()
     res.redirect('/items')
-  } catch (err){
+  } catch (err) {
     res.send(err)
   }
 });

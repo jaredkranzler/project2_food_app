@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+
   <title>Restauranteur</title>
+
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Tinos" rel="stylesheet">
 </head>
@@ -9,14 +11,14 @@
 <header>
 
 <section> 
-<a href="/items">Admin</a>
+<a href="items/new">Admin</a>
   <a href="/auth/profile">Profile</a>
-  <% if (loggedIn) { -%>
+  <% if (loggedIn) { %>
     <%=username%> <a href="/auth/logout">Logout</a>
-  <% } else { -%>
+  <% } else { %>
     <a href="/auth/login">Login</a><br>
     <a href="/auth/register">Register</a>
-  <% } -%>
+      <% } %>
 </section>
 
   <h1>The Restauranteur</h1>

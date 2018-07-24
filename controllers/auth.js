@@ -33,6 +33,7 @@ router.get('/login', (request, response) => {
   }
 });
 
+
 router.get('/register', (request, response) => {
   if(request.session.message) {
     const message = request.session.message;
@@ -83,7 +84,6 @@ router.post('/register', (request, response) => {
   const userDbEntry = {};
   userDbEntry.username = request.body.username;
   userDbEntry.password = passwordHash;
-
 
   // PREVENT DUPE USERNAMES
   // if a user exists in the db with the desired username
@@ -138,7 +138,6 @@ router.post('/profile', (request, response) => {
       });
   });
 });
-
 
 // Logging out
 router.get('/logout', (request, response) => {

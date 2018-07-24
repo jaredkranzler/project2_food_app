@@ -3,9 +3,9 @@ const router  = express.Router();
 
 // ------------------------------------------------------
 // require the model
-const Item  = require('../models/item')
-const Order = require('../models/order')
-const User = require('../models/user')
+const Item  = require('../models/item');
+const Order = require('../models/order');
+const User = require('../models/user');
 
 
 // router level middleware to keep out everybody but admin
@@ -17,27 +17,32 @@ router.use((request, response, next) => {
 })
 
 
-//-------------------------------------------------------
-router.get('/:id', (request, response) => {
-  response.render('home.ejs', { 
-      username: request.session.username,
-      loggedIn: request.session.loggedIn
-  })
-})
-
 
 //-------------------------------------------------------
-// Menu Index
-router.get('/', (request, response) => {
+// admin *New* items menu
+router.get('/new', (req, res) => {
   Item.find({}, (err, theItems) => {
-
-    response.render('items/menu.ejs', {
+    res.render('items/new.ejs', {
       items: theItems,
-      username: request.session.username,
-      loggedIn: request.session.loggedIn
+      username: req.session.username,
+      loggedIn: req.session.loggedIn
     });
   });
 });
+
+router.get('/', (req, res) => {
+
+});
+//-------------------------------------------------------
+router.get('/:id', (req, res) => {
+  res.render('home.ejs', { 
+      username: req.session.username,
+      loggedIn: req.session.loggedIn
+  });
+});
+//-------------------------------------------------------
+
+
 
 
 // --------------------------------------------------------------------------------
@@ -74,23 +79,18 @@ router.get('/seed', (req, res) => {
   },
     ], (err, addItem) => {
       res.send('items added')
-
-  })
-})
+  });
+});
 
 
 // --------------------------------------------------------------------------------
 // create route -- add to data
 router.post('/', async (req, res, next) => {
     try {
-
         const createdItem = await Item.create(req.body);
-        res.redirect('/items')
-
+        res.redirect('items/new')
     }  catch (err){
-
       next(err, "hey")
-      
     }
 });
 
@@ -101,7 +101,7 @@ router.delete('/:id', async (req, res, next) => {
 
   try {
     const foundItem   = await Item.findByIdAndRemove(req.params.id);
-    res.redirect('/items')
+    res.redirect('./new')
   } catch (err){
     next(err)
     res.send(err)
@@ -113,7 +113,6 @@ router.delete('/:id', async (req, res, next) => {
 // UPDATE PUT
 router.put('/:id', async (req, res, next)=>{
   try {
-
     const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, {new: true});
     // Find the user with that photo
     const foundUser = await User.findOne({'items._id': req.params.id});
@@ -129,10 +128,6 @@ router.put('/:id', async (req, res, next)=>{
     res.send(err)
     }
 });
-
-// --------------------------------------------------------------------------------
-
-
 
 // --------------------------------------------------------------------------------
 module.exports = router;

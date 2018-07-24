@@ -1,0 +1,12 @@
+body {
+  text-align: center;
+  font-family: tinos;
+  background-color: #E8E6D1;
+}
+
+header, footer {
+  background-color: #8E262A;
+  padding: 20px;
+}
+
+

@@ -36,10 +36,8 @@ router.get('/', (request, response) => {
   })
 })
 
-
 //--------------------------------------------------------------------------------------
 // PUT (UPDATE)
-
 router.put('/:id', async (req, res) => {
   try {
     const updatedOrder = await Order.findbyIdAndUpdate(req.params.id, req.body);
@@ -68,7 +66,6 @@ router.post('/', async (req, res) => {
 // DELETE
 router.delete('/:id', async (req, res) => {
   try {
-
     const deletedOrder = await Order.findByIdAndRemove(req.params.id)
     const itemIds = [];
     for (let i = 0; i < deletedOrder.items.length; i++) {
@@ -80,7 +77,6 @@ router.delete('/:id', async (req, res) => {
     res.send(err, 'delete route messed up')
   }
 })
-
 
 //--------------------------------------------------------------------------------------
 module.exports = router;

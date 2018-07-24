@@ -37,6 +37,9 @@ router.get('/', (request, response) => {
   })
 })
 
+//--------------------------------------------------------------------------------------
+// PUT (UPDATE)
+
 // CREATE
 router.get('/:id', async (req, res) => {
   const findUser = await User.findById(req.body.userId)
@@ -45,11 +48,8 @@ router.get('/:id', async (req, res) => {
   const data = await foundUser.save()
   res.redirect('orders/cart.ejs', {
     user: request.session.username,
-
-
-  })
-
-})
+  });
+});
 
 //--------------------------------------------------------------------------------------
 // PUT (UPDATE)
@@ -89,7 +89,6 @@ router.put('/:id', async (request, response) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-
     const deletedOrder = await Order.findByIdAndRemove(req.params.id)
     const itemIds = [];
     for (let i = 0; i < deletedOrder.items.length; i++) {
@@ -101,7 +100,6 @@ router.delete('/:id', async (req, res) => {
     res.send(err, 'delete route messed up')
   }
 })
-
 
 //--------------------------------------------------------------------------------------
 module.exports = router;

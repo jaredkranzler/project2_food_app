@@ -20,7 +20,7 @@
             <h3><%=items[i].price%></h3>
 
 
-          <form action="/orders/<%=orders._id%>?_method=DELETE" method="post">
+          <form action="/orders/new<%=orders._id%>?_method=DELETE" method="post">
               <input type="submit" value="Delete item"/>
           </form>
           

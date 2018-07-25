@@ -10,26 +10,39 @@ const User = require('../models/user')
 
 
 
-// URL should be get /:id
-// load current order
-// show list of items for user to add
+// ORDER SHOW ROUTE
+// URL should be /cart (GET /orders/cart), since you could store Order ID in session
+// load current order -- get it from database, using  sessions 
 
 // show what is currently in their cart
-// ORDER SHOW ROUTE
+// and buttons to +/-/remove
 // should render orders/show.ejs
-// change orders/index.ejs to be a list of past orders
+// (change orders/index.ejs to be a list of past orders)
+// cancel order button
 
 // this route is like the cart
+
 // optionally, you could conditionally show a create order button here if there isn't one
-// note: this is also kind of an edit route 
+// note: this is  kind of an edit route 
 // because user can change cart
+
+router.get('/cart', (req, res) => {
+  res.send("cart")
+})
+
+
+
+
+
+// menu route suggested URL change: /orders/menu
+// list of items with button to add -- this route is almost done as is
 router.get('/', async (req, res, next)=>{
     try {
-      const foundOrder = await Order.find({});
+      // const foundOrder = await Order.find({});
       const foundAllItem = await Item.find({});
         // this should be orders/show.ejs,
         res.render('orders/index.ejs', {
-          orders: foundOrder, 
+          // orders: foundOrder, 
           items: foundAllItem,
           username: req.session.username,
           loggedIn: req.session.loggedIn
@@ -40,6 +53,13 @@ router.get('/', async (req, res, next)=>{
 });
 
 
+
+
+
+
+
+
+// LAST THING
 // another place create order button could go 
 // is in order index.  create order index route here
 // order INDEX should:
@@ -54,34 +74,34 @@ router.get('/', async (req, res, next)=>{
 // // new: (new order) 
 // goal: list the items in the current order
 // IGNORE this for now
+// DETELETE ME DELETE THIS DO NOT USE THIS
 router.get('/new', async (req, res, next) => {
-  console.log("")
-  console.log("")
-  console.log("")
-  console.log("hitting /orders/new")
-  console.log("")
-  console.log("")
-  console.log("")
-  try{
+// DETELETE ME DELETE THIS DO NOT USE THIS
+  try {
     const foundOrders = await Order.find({});
+// DETELETE ME DELETE THIS DO NOT USE THIS
     res.render('orders/new.ejs', {
       orders: foundOrders,
       items: foundOrders,
+// DETELETE ME DELETE THIS DO NOT USE THIS
       username: req.session.username,
       loggedIn: req.session.loggedIn
     });
+// DETELETE ME DELETE THIS DO NOT USE THIS
   } catch (err) {
     console.log(err, '<------ ERROR');
     next(err);
   }
 });
-
+// DETELETE ME DELETE THIS DO NOT USE THIS
 
 
 
 // ORDER CREATE route -- the button mentioned above should hit this route
 // this route should:
+// 
 //   create an order
+//   store that created order object in the user's orders array
 //   store info in session to indicate that
 //   there's an open order
 router.post('/', async (req, res, next) => {
@@ -101,14 +121,18 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+
+
+
+
 // add to order
 // change url to additem
 // post /additem --> POST /orders/additem
 
   // get current order object from database
   // get item from database
-  // push into items array of current order object you just got from db
-  // redirect to order show page (so user can see item got added)
+  // push into items array of current order object you just got from db (and save)
+  // redirect to cart (order show page) (so user can see item got added)
 
 router.post('/new', async (req, res, next) => {
     try {
@@ -139,12 +163,12 @@ router.post('/new', async (req, res, next) => {
 /// should be 1 or more routes hit by buttons 
 /// (like delete, +, -) on the show page
 // the route(s) should adjust order in db as necessary
-// and then redirect to show page
+// and then redirect to cart (order show page)
 
-// URLS/routes you might need
-  // put /remove/:orderid/:itemid/
-  // put /increase/:orderid/:itemid/
-  // put /decrease/:orderid/:itemid/
+// URLS/routes you might need (you could omit orderID since it is being stored in session)
+  // put /remove/:itemid/
+  // put /increase/:itemid/
+  // put /decrease/:itemid/
 
 
 router.put('/:id', async (req, res) => {

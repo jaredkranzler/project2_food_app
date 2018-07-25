@@ -3,7 +3,10 @@ const Item = require('./item');
 
 
 const orderSchema = mongoose.Schema({
-  orderDate: Date,
+  orderDate: {
+    type: Date,
+    default: Date.now
+  },
   newOrder: Boolean, 
   items: [Item.schema]
 })

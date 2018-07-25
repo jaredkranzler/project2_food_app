@@ -23,12 +23,14 @@ router.get('/login', (request, response) => {
 
     // rendering login template with the message that WAS in request.session.message
     response.render('auth/login.ejs', {
-      message: message
+      message: message, 
+      loggedIn: request.session.loggedIn
     })
   // request.session.message doesnt have a value (or is already null)
   } else {
     response.render('auth/login.ejs', {
-      message: null
+      message: null,
+      loggedIn: request.session.loggedIn
     }); 
   }
 });
@@ -39,11 +41,13 @@ router.get('/register', (request, response) => {
     const message = request.session.message;
     request.session.message = null
     response.render('auth/register.ejs', {
-      message: message
+      message: message,
+      loggedIn: req.session.loggedIn      
     });
   } else {
     response.render('auth/register.ejs', {
-      message: null
+      message: null,
+      loggedIn: request.session.loggedIn    
     });
   }
 });
@@ -110,13 +114,13 @@ router.post('/register', (request, response) => {
 
 
 router.get('/profile', (request, response) => {
-        response.render('auth/profile.ejs')
+  response.render('auth/profile.ejs')
 });
 
 
 
-
 // maybe make it so password can be changed/updated
+
 router.post('/profile', (request, response) => {
   const password = request.body.password;
   const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));

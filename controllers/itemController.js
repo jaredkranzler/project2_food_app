@@ -18,20 +18,6 @@ router.use((request, response, next) => {
 
 
 
-// User menu page
-router.get('/', async (req, res, next)=>{
-    try {
-     const foundAllItem = await Item.find(req.body);
-        res.render('items/index.ejs', {
-          items: foundAllItem,
-          username: req.session.username,
-          loggedIn: req.session.loggedIn
-      });
-    } catch (err) {
-      next(err)
-    }
-});
-
 
 //-------------------------------------------------------
 // admin *New* items menu

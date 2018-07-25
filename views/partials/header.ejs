@@ -9,11 +9,8 @@
 </head>
 <body>
 <header>
-
 <section> 
-  <% if (request.session.username !== 'admin'){ %> <%} else {%>
 <a href="items/new">Admin</a>
-  <%} %>
   <a href="/auth/profile">Profile</a>
   <% if (loggedIn) { %>
     <%=username%> <a href="/auth/logout">Logout</a>
@@ -27,7 +24,7 @@
   
   <nav>
     <a href="/">Home</a>
-    <a href="/items">Menu</a>
+    <a href="/orders">Menu</a>
     <a href="/orders">Cart</a>
   </nav>
 

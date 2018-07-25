@@ -48,6 +48,8 @@ router.get('/new', (req, res) => {
 router.get('/', (req, res) => {
 
 });
+
+
 //-------------------------------------------------------
 router.get('/:id', (req, res) => {
   res.render('home.ejs', { 
@@ -113,7 +115,6 @@ router.post('/', async (req, res, next) => {
 // --------------------------------------------------------------------------------
 // DELETE
 router.delete('/:id', async (req, res, next) => {
-
   try {
     const foundItem   = await Item.findByIdAndRemove(req.params.id);
     res.redirect('./new')
@@ -143,6 +144,7 @@ router.put('/:id', async (req, res, next)=>{
     res.send(err)
     }
 });
+
 
 // --------------------------------------------------------------------------------
 module.exports = router;

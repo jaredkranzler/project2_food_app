@@ -12,7 +12,7 @@
     <main>
       <section>
       <ul>
-        <% for(let i = 0; i < orders.length; i++){ %>
+        <% for(let i = 0; i < items.length; i++){ %>
           <li>
            <h3><%=items[i].name%></h3>
             <h3><img src="<%=items[i].image%>"></h3>
@@ -20,7 +20,8 @@
             <h3><%=items[i].price%></h3>
 
 
-          <form action="/orders/new<%=orders._id%>?_method=DELETE" method="post">
+          <form action="/orders/cart/<%=items[i].id%>?_method=DELETE" method="post">
+
               <input type="submit" value="Delete item"/>
           </form>
           

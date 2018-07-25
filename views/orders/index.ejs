@@ -4,24 +4,34 @@
 <!-- get data from admin menu -->
 <!-- add button to add datta to cart menu -->
 
-This is the user menu
 
-<div class="box">
-  <ul>
-      <% for (let i = 0; i < items.length; i++) { %>
-          <li>
-              
-            <h3><%=items[i].name%></h3>
-            <h3><img src="<%=items[i].image%>"></h3>
-            <h3><%=items[i].body%></h3>
-            <h3><%=items[i].price%></h3>
-            <form action="/orders/new" method="POST">
-              <input type="submit" value="Add to Cart"/>              
-            </form>
-          </li>
-      <% } %>
-  </ul>
-</div>
+<% if (orderId) { -%>
+
+  <div class="box">
+    <ul>
+        <% for (let i = 0; i < items.length; i++) { %>
+            <li>
+                
+              <h3><%=items[i].name%></h3>
+              <h3><img src="<%=items[i].image%>"></h3>
+              <h3><%=items[i].body%></h3>
+              <h3><%=items[i].price%></h3>
+              <form action="/orders/additem" method="POST">
+                <input type="hidden" name="itemid" value="<%=items[i].id%>">
+                <input type="submit" value="Add to Cart"/>              
+              </form>
+            </li>
+        <% } %>
+    </ul>
+  </div>
+
+<% } else { -%>
+
+  <form action="/orders" method="POST">
+    <button>Create Order</button>
+  </form>
+  
+<% } -%>
 
 
 

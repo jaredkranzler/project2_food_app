@@ -27,6 +27,7 @@ const User = require('../models/user')
 // because user can change cart
 
 router.get('/cart', (req, res) => {
+  
   res.send("cart")
 })
 
@@ -54,7 +55,7 @@ router.get('/', async (req, res, next)=>{
 
 
 
-
+// req.session.order = created order
 
 
 

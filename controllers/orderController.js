@@ -28,14 +28,10 @@ router.get('/', async (req, res, next)=>{
 // create route -- add to data
 router.post('/', async (req, res, next) => {
     try {
-
         const createdItem = await Order.create(req.body);
-        res.redirect('/orders')
-
-    }  catch (err){
-
-      next(err, "hey")
-      
+        res.redirect('/orders/new')
+    } catch (err) {
+      next(err, "hey")     
     }
 });
 
@@ -73,6 +69,7 @@ router.post('/new', async (req, res, next) => {
 });
 
 
+
 //--------------------------------------------------------------------------------------
 // PUT (UPDATE)
 
@@ -84,7 +81,7 @@ router.put('/:id', async (req, res) => {
     foundUser.orders.push(updatedOrder);
     const data = await foundUser.save();
     res.redirect('/orders');
-  } catch (err){
+  } catch (err) {
 
     res.send(err)
   }
@@ -107,7 +104,7 @@ router.delete('/:id', async (req, res) => {
   } catch (err) {
     res.send(err, 'delete route messed up')
   }
-})
+});
 
 //--------------------------------------------------------------------------------------
 module.exports = router;

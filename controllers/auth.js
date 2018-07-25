@@ -114,7 +114,10 @@ router.post('/register', (request, response) => {
 
 
 router.get('/profile', (request, response) => {
-  response.render('auth/profile.ejs')
+  response.render('auth/profile.ejs', {
+    username: request.session.username,
+    loggedIn: request.session.loggedIn
+  });
 });
 
 

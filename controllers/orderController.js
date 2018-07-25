@@ -40,20 +40,36 @@ router.post('/', async (req, res, next) => {
 });
 
 
+
 // Orders/CART.ejs (index)
 // // CART: (order show page) 
-router.get('/', async (req, res) => {
+router.get('/new', async (req, res) => {
   try{
+    // const foundAllItems = await Item.find({});
     const foundOrder = await Order.find({});
     res.render('orders/new.ejs', {
+      // items: foundAllItems,
       orders: foundOrder, 
       username: req.session.username,
-      loggedIn: req.session.loggedIn,
+      loggedIn: req.session.loggedIn
     });
   } catch (err) {
     console.log(err, '<------ ERROR');
     next(err);
   }
+});
+
+// create route -- add to data
+router.post('/new', async (req, res, next) => {
+    try {
+        const createdItem = await Order.create(req.body);
+        res.redirect('/orders')
+
+    }  catch (err){
+
+      next(err, "hey")
+      
+    }
 });
 
 

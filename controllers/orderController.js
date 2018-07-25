@@ -144,7 +144,7 @@ router.post('/', async (req, res, next) => {
 // post /additem --> POST /orders/additem
 
   // DONE get item from database  
-  // get current order object from database
+  // DONE get current order object from database
   // push item into items array of current order object you just got from db (and save)
   // DONE redirect to cart (order show page) (so user can see item got added)
 
@@ -174,7 +174,7 @@ router.post('/additem', async (req, res, next) => {
       foundUser.orders.id(req.session.orderId).items.push(foundItem);
       console.log(foundUser.orders.id(req.session.orderId).items, " this is where we're trying to push ")
       const userData = await foundUser.save();
-      
+
       // redirect
       res.redirect('/orders/cart')
 

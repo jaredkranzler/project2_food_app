@@ -10,7 +10,6 @@ const User = require('../models/user')
 
 
 
-// User menu page (index) show a list of items, add to cart and begin new order
 // URL should be get /:id
 // load current order
 // show list of items for user to add

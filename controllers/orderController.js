@@ -121,11 +121,17 @@ router.post('/', async (req, res, next) => {
         // stores id of the order we just created within session object
         req.session.orderId = createdOrder.id;
 
+        // push that created order object in the user's orders array
+        User.findOne({ username: req.session.username }, (err, foundUser) => {
+          foundUser.orders.push(createdOrder);
+          foundUser.save((err, data) => {
+            if(err) console.log(err);
+            res.redirect('/orders')            
+          })
+        });
 
-        // add id of created order to session
-        res.redirect('/orders')
-    }  catch (err) {
-      next(err, "hey")     
+    }  catch (err2) {
+      next(err2, "hey")     
     }
 });
 
@@ -161,6 +167,14 @@ router.post('/additem', async (req, res, next) => {
       foundOrder.items.push(foundItem);
       const data = await foundOrder.save();
 
+      // get user
+      // find this order in user's order's array
+      // add this item to that array too
+      const foundUser = await User.findOne({ username: req.session.username });
+      foundUser.orders.id(req.session.orderId).items.push(foundItem);
+      console.log(foundUser.orders.id(req.session.orderId).items, " this is where we're trying to push ")
+      const userData = await foundUser.save();
+      
       // redirect
       res.redirect('/orders/cart')
 

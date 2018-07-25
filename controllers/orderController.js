@@ -26,10 +26,18 @@ const User = require('../models/user')
 // note: this is  kind of an edit route 
 // because user can change cart
 
-router.get('/cart', (req, res) => {
-  res.send("cart")
-})
-
+router.get('/cart', async (req, res) => {
+  // 1. get order obj fromdb
+  // render and pass order.items to template
+  // get current order object from database
+  const foundOrder = await Order.findById(req.session.orderId);
+  console.log(foundOrder, "foundOrder in POST /orders/additem");
+  res.render('orders/cart.ejs', {
+    items: foundOrder.items,
+    username: req.session.username,
+    loggedIn: req.session.loggedIn
+  });
+});
 
 
 
@@ -40,12 +48,12 @@ router.get('/', async (req, res, next)=>{
     try {
       // const foundOrder = await Order.find({});
       const foundAllItem = await Item.find({});
-        // this should be orders/show.ejs,
-        res.render('orders/index.ejs', {
-          // orders: foundOrder, 
-          items: foundAllItem,
-          username: req.session.username,
-          loggedIn: req.session.loggedIn
+      // this should be orders/show.ejs,
+      res.render('orders/index.ejs', {
+        orderId: req.session.orderId,
+        items: foundAllItem,
+        username: req.session.username,
+        loggedIn: req.session.loggedIn
       });
     } catch (err) {
       next(err)
@@ -71,53 +79,53 @@ router.get('/', async (req, res, next)=>{
 
 
 
+
 // // new: (new order) 
 // goal: list the items in the current order
 // IGNORE this for now
 // DETELETE ME DELETE THIS DO NOT USE THIS
-router.get('/new', async (req, res, next) => {
-// DETELETE ME DELETE THIS DO NOT USE THIS
+router.get('/cart', async (req, res, next) => {
+// DELETE ME DELETE THIS DO NOT USE THIS
   try {
     const foundOrders = await Order.find({});
-// DETELETE ME DELETE THIS DO NOT USE THIS
-    res.render('orders/new.ejs', {
+// DELETE ME DELETE THIS DO NOT USE THIS
+    res.render('orders/cart.ejs', {
       orders: foundOrders,
       items: foundOrders,
-// DETELETE ME DELETE THIS DO NOT USE THIS
+// DELETE ME DELETE THIS DO NOT USE THIS
       username: req.session.username,
       loggedIn: req.session.loggedIn
     });
-// DETELETE ME DELETE THIS DO NOT USE THIS
+// DELETE ME DELETE THIS DO NOT USE THIS
   } catch (err) {
     console.log(err, '<------ ERROR');
     next(err);
   }
 });
-// DETELETE ME DELETE THIS DO NOT USE THIS
+// DELETE ME DELETE THIS DO NOT USE THIS
 
 
 
 // ORDER CREATE route -- the button mentioned above should hit this route
 // this route should:
 // 
-//   create an order
+//   create a  order
 //   store that created order object in the user's orders array
 //   store info in session to indicate that
 //   there's an open order
 router.post('/', async (req, res, next) => {
     try {
+        //creates db object for a new order, captures that db object in createdOrder variable
+        const createdOrder = await Order.create({});
+        console.log(createdOrder, "this is the order we just created")
+        // stores id of the order we just created within session object
+        req.session.orderId = createdOrder.id;
 
-        const createdOrder = await Order.create(req.body);
 
-        res.redirect('/orders', {     
-          username: req.session.username,
-          loggedIn: req.session.loggedIn
-        })
-
-    }  catch (err){
-
-      next(err, "hey")
-      
+        // add id of created order to session
+        res.redirect('/orders')
+    }  catch (err) {
+      next(err, "hey")     
     }
 });
 
@@ -129,22 +137,32 @@ router.post('/', async (req, res, next) => {
 // change url to additem
 // post /additem --> POST /orders/additem
 
+  // DONE get item from database  
   // get current order object from database
-  // get item from database
-  // push into items array of current order object you just got from db (and save)
-  // redirect to cart (order show page) (so user can see item got added)
+  // push item into items array of current order object you just got from db (and save)
+  // DONE redirect to cart (order show page) (so user can see item got added)
 
-router.post('/new', async (req, res, next) => {
+router.post('/additem', async (req, res, next) => {
+    console.log(req.body);
     try {
-        // get item with this id from items collection
-        // push into items array in the currently open order
-        // which should be an Order (model) that was previously creatd
+      // get item with this id from items collection
+      // push into items array in the currently open order
+      // which should be an Order (model) that was previously creatd
 
-        // get all the items in this variable
-        const foundItem  = await Item.find(req.body);
+      // get the item we are trying to add in this variable
+      const foundItem = await Item.findById(req.body.itemid);
+      console.log(foundItem, "foundItem in POST /orders/additem");
 
-        // redirect
-        res.redirect('/new')
+      // get current order object from database
+      const foundOrder = await Order.findById(req.session.orderId);
+      console.log(foundOrder, "foundOrder in POST /orders/additem");
+
+      // push item into items array of current order object you just got from db (and save)      
+      foundOrder.items.push(foundItem);
+      const data = await foundOrder.save();
+
+      // redirect
+      res.redirect('/orders/cart')
 
     }  catch (err){
 
@@ -193,10 +211,10 @@ router.put('/:id', async (req, res) => {
 // cancel the order
 // this route should be hit by a "Cancel order button"
 // this may mean you need a cancel order button on your show page
-router.delete('/new', async (req, res, next) => {
+router.delete('/cart', async (req, res, next) => {
   try {
     const foundItem   = await Item.findOne(req.body).remove();
-    res.redirect('./new')
+    res.redirect('./cart')
   } catch (err) {
     next(err, '<------------delete')
     res.send(err)

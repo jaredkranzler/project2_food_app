@@ -9,7 +9,7 @@ const orderSchema = mongoose.Schema({
   },
   newOrder: Boolean, 
   items: [Item.schema]
-})
+});
 
 // create a model based on the schema, this lets us use mongoose methods
 // this creates a mongoose "Model" object, which means it has all the query methods

@@ -18,6 +18,20 @@ router.use((request, response, next) => {
 
 
 
+
+router.get('/', async (req, res, next)=>{
+    try {
+
+     const foundAllItem = await Item.find(req.body);
+        res.render('items/index.ejs', {
+          items: foundAllItem
+      });
+    } catch (err) {
+
+      next(err)
+    }
+});
+
 //-------------------------------------------------------
 // admin *New* items menu
 router.get('/new', (req, res) => {

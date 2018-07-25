@@ -9,20 +9,6 @@ const User = require('../models/user')
 //-------------------------------------------------------------------------
 
 
-router.get('/:menu', async (req, res, next)=>{
-    try {
-
-     const foundAllItem = await Item.find(req.body);
-        res.render('orders/menu.ejs', {
-          items: foundAllItem
-      });
-    } catch (err) {
-
-      next(err)
-    }
-});
-
-
 // create route -- add to data
 router.post('/', async (req, res, next) => {
     try {
@@ -38,14 +24,12 @@ router.post('/', async (req, res, next) => {
 });
 
 
-
-
 // Orders/CART.ejs (index)
 // // CART: (order show page) 
 router.get('/', async (req, res) => {
   try{
     const foundOrder = await Order.find({});
-    res.render('orders/cart.ejs', {
+    res.render('orders/new.ejs', {
       orders: foundOrder, 
       username: req.session.username,
       loggedIn: req.session.loggedIn,
@@ -55,21 +39,6 @@ router.get('/', async (req, res) => {
     next(err);
   }
 });
-
-
-// Show
-router.get('/', (req, res) => {
-  Order.findById(req.params.id, (err, foundOrder) => {
-    res.render('orders/show.ejs', {
-      username: req.session.username,
-      loggedIn: req.session.loggedIn
-    })
-  })
-})
-
-
-//--------------------------------------------------------------------------------------
-// PUT (UPDATE)
 
 
 //--------------------------------------------------------------------------------------

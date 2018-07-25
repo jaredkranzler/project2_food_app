@@ -28,33 +28,30 @@ router.get('/', async (req, res, next)=>{
 // create route -- add to data
 router.post('/', async (req, res, next) => {
     try {
-
         const createdItem = await Order.create(req.body);
-        res.redirect('/orders')
-
-    }  catch (err){
-
-      next(err, "hey")
-      
+        res.redirect('/orders/new')
+    } catch (err) {
+      next(err, "hey")     
     }
 });
 
 
 // Orders/CART.ejs (index)
 // // CART: (order show page) 
-router.get('/', async (req, res) => {
+router.get('/new', async (req, res) => {
   try{
     const foundOrder = await Order.find({});
     res.render('orders/new.ejs', {
       orders: foundOrder, 
       username: req.session.username,
-      loggedIn: req.session.loggedIn,
+      loggedIn: req.session.loggedIn
     });
   } catch (err) {
     console.log(err, '<------ ERROR');
     next(err);
   }
 });
+
 
 
 //--------------------------------------------------------------------------------------
@@ -68,7 +65,7 @@ router.put('/:id', async (req, res) => {
     foundUser.orders.push(updatedOrder);
     const data = await foundUser.save();
     res.redirect('/orders');
-  } catch (err){
+  } catch (err) {
 
     res.send(err)
   }
@@ -91,7 +88,7 @@ router.delete('/:id', async (req, res) => {
   } catch (err) {
     res.send(err, 'delete route messed up')
   }
-})
+});
 
 //--------------------------------------------------------------------------------------
 module.exports = router;

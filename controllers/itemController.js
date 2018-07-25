@@ -92,7 +92,7 @@ router.post('/', async (req, res, next) => {
     try {
         const createdItem = await Item.create(req.body);
         res.redirect('items/new')
-    }  catch (err){
+    } catch (err) {
       next(err, "hey")
     }
 });
@@ -104,7 +104,7 @@ router.delete('/:id', async (req, res, next) => {
   try {
     const foundItem   = await Item.findByIdAndRemove(req.params.id);
     res.redirect('./new')
-  } catch (err){
+  } catch (err) {
     next(err)
     res.send(err)
   }

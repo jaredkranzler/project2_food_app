@@ -122,6 +122,8 @@ router.get('/profile', (request, response) => {
 
 
 
+// maybe make it so password can be changed/updated
+
 router.post('/profile', (request, response) => {
   const password = request.body.password;
   const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));

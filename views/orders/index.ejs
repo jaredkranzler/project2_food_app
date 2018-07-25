@@ -1,6 +1,4 @@
 
-<%- include('../partials/header'); -%>
-
 <!-- This is the USER MENU PAGE -->
 <!-- get data from admin menu -->
 <!-- add button to add datta to cart menu -->
@@ -16,7 +14,7 @@ This is the user menu
             <h3><img src="<%=items[i].image%>"></h3>
             <h3><%=items[i].body%></h3>
             <h3><%=items[i].price%></h3>
-            <form>
+            <form action="orders/new" method="POST">
               <input type="submit" value="Add to Cart"/>
               </form>
             </form>

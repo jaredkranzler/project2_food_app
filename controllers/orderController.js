@@ -9,6 +9,22 @@ const User = require('../models/user')
 //-------------------------------------------------------------------------
 
 
+
+// User menu page
+router.get('/', async (req, res, next)=>{
+    try {
+      const foundAllItem = await Item.find({});
+        res.render('orders/index.ejs', {
+          items: foundAllItem,
+          username: req.session.username,
+          loggedIn: req.session.loggedIn
+      });
+    } catch (err) {
+      next(err)
+    }
+});
+
+
 // create route -- add to data
 router.post('/', async (req, res, next) => {
     try {

@@ -75,12 +75,12 @@ router.get('/', async (req, res, next)=>{
 // goal: list the items in the current order
 // IGNORE this for now
 // DETELETE ME DELETE THIS DO NOT USE THIS
-router.get('/new', async (req, res, next) => {
+router.get('/cart', async (req, res, next) => {
 // DETELETE ME DELETE THIS DO NOT USE THIS
   try {
     const foundOrders = await Order.find({});
 // DETELETE ME DELETE THIS DO NOT USE THIS
-    res.render('orders/new.ejs', {
+    res.render('orders/cart.ejs', {
       orders: foundOrders,
       items: foundOrders,
 // DETELETE ME DELETE THIS DO NOT USE THIS
@@ -134,7 +134,7 @@ router.post('/', async (req, res, next) => {
   // push into items array of current order object you just got from db (and save)
   // redirect to cart (order show page) (so user can see item got added)
 
-router.post('/new', async (req, res, next) => {
+router.post('/cart', async (req, res, next) => {
     try {
         // get item with this id from items collection
         // push into items array in the currently open order
@@ -144,7 +144,7 @@ router.post('/new', async (req, res, next) => {
         const foundItem  = await Item.find(req.body);
 
         // redirect
-        res.redirect('/new')
+        res.redirect('/cart')
 
     }  catch (err){
 

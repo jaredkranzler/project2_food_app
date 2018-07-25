@@ -1,0 +1,36 @@
+<%- include('../partials/header'); -%>
+
+<h2>Your Cart</h2>
+          
+      <!-- get data from USER MENU -->
+      <!-- user can remove items or continue shopping -->
+      <!-- add and calculate subtotal and tax and total -->
+      <!-- store order history in user profile & -->
+      <!-- display user order history on home page -->
+      <!-- add checkout button  -->
+
+    <main>
+      <section>
+      <ul>
+        <% for(let i = 0; i < orders.length; i++){ %>
+          <li>
+           <h3><%=items[i].name%></h3>
+            <h3><img src="<%=items[i].image%>"></h3>
+            <h3><%=items[i].body%></h3>
+            <h3><%=items[i].price%></h3>
+
+
+          <form action="/orders/<%=orders._id%>?_method=DELETE" method="post">
+              <input type="submit" value="Delete item"/>
+          </form>
+          
+        <% } %>
+      </ul>
+      </section>
+
+
+
+    </main>
+
+
+<%- include('../partials/footer'); -%>

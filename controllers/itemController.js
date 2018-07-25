@@ -17,6 +17,36 @@ router.use((request, response, next) => {
 })
 
 
+
+
+router.get('/', async (req, res, next)=>{
+    try {
+
+     const foundAllItem = await Item.find(req.body);
+        res.render('items/index.ejs', {
+          items: foundAllItem
+      });
+    } catch (err) {
+
+      next(err)
+    }
+});
+
+//-------------------------------------------------------
+// admin *New* items menu
+router.get('/new', (req, res) => {
+  Item.find({}, (err, theItems) => {
+    res.render('items/new.ejs', {
+      items: theItems,
+      username: req.session.username,
+      loggedIn: req.session.loggedIn
+    });
+  });
+});
+
+router.get('/', (req, res) => {
+
+});
 //-------------------------------------------------------
 router.get('/:id', (req, res) => {
   res.render('home.ejs', { 
@@ -27,18 +57,6 @@ router.get('/:id', (req, res) => {
 //-------------------------------------------------------
 
 
-
-//-------------------------------------------------------
-// Menu Index
-router.get('/', (req, res) => {
-  Item.find({}, (err, theItems) => {
-    res.render('items/menu.ejs', {
-      items: theItems,
-      username: req.session.username,
-      loggedIn: req.session.loggedIn
-    });
-  });
-});
 
 
 // --------------------------------------------------------------------------------
@@ -84,7 +102,7 @@ router.get('/seed', (req, res) => {
 router.post('/', async (req, res, next) => {
     try {
         const createdItem = await Item.create(req.body);
-        res.redirect('/items')
+        res.redirect('items/new')
     }  catch (err){
       next(err, "hey")
     }
@@ -97,7 +115,7 @@ router.delete('/:id', async (req, res, next) => {
 
   try {
     const foundItem   = await Item.findByIdAndRemove(req.params.id);
-    res.redirect('/items')
+    res.redirect('./new')
   } catch (err){
     next(err)
     res.send(err)

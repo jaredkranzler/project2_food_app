@@ -8,12 +8,28 @@ const Item = require('../models/item');
 const User = require('../models/user')
 //-------------------------------------------------------------------------
 
+
+// create route -- add to data
+router.post('/', async (req, res, next) => {
+    try {
+
+        const createdItem = await Order.create(req.body);
+        res.redirect('/orders')
+
+    }  catch (err){
+
+      next(err, "hey")
+      
+    }
+});
+
+
 // Orders/CART.ejs (index)
 // // CART: (order show page) 
 router.get('/', async (req, res) => {
   try{
     const foundOrder = await Order.find({});
-    res.render('orders/cart.ejs', {
+    res.render('orders/new.ejs', {
       orders: foundOrder, 
       username: req.session.username,
       loggedIn: req.session.loggedIn,
@@ -22,32 +38,6 @@ router.get('/', async (req, res) => {
     console.log(err, '<------ ERROR');
     next(err);
   }
-});
-
-
-// Show
-router.get('/', (req, res) => {
-  Order.findById(req.params.id, (err, foundOrder) => {
-    res.render('orders/show.ejs', {
-      username: req.session.username,
-      loggedIn: req.session.loggedIn
-    })
-  })
-})
-
-
-//--------------------------------------------------------------------------------------
-// PUT (UPDATE)
-
-// CREATE
-router.get('/:id', async (req, res) => {
-  const findUser = await User.findById(req.body.userId)
-  const findOrder = await Order.findById(req.params.id);
-  foundUser.Orders.push(createdOrder);
-  const data = await foundUser.save()
-  res.redirect('orders/cart.ejs', {
-    user: req.session.username,
-  });
 });
 
 

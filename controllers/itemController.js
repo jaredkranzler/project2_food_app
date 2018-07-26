@@ -49,16 +49,16 @@ router.get('/seed', (req, res) => {
       },
 
       {
-        name: "hot dog" ,
-        image: "https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiUhfKXi7HcAhUI5IMKHQ2eDHoQjRx6BAgBEAU&url=http%3A%2F%2Fwww.russianweek.ca%2Fnews%2Fcanada%2F%25D1%2585%25D0%25BE%25D1%2582-%25D0%25B4%25D0%25BE%25D0%25B3%25D0%25B8-%25D0%25B2-%25D1%2581%25D0%25BE%25D0%25B1%25D0%25B0%25D1%2587%25D1%258C%25D0%25B5%25D0%25BC-%25D0%25BF%25D0%25B0%25D1%2580%25D0%25BA%25D0%25B5%2F&psig=AOvVaw2pZIr6cIVT8NvXblpF1eQh&ust=1532293209329873",
-        body: "Freshly baked everyday",
+        name: "Pocket Dog" ,
+        image: "https://s33.postimg.cc/ombb7yq9b/pocketdog.jpg",
+        body: "I always have a hot dog in my pocket",
         price: 8.50
       },
 
       {
         name: "Burger" ,
         image: "https://imagesvc.timeincapp.com/v3/mm/image?url=https%3A%2F%2Fcdn-image.foodandwine.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2F1519844002%2Ffast-food-mobile-apps-chick-fil-a-FT-BLOG0218.jpg%3Fitok%3D7d_gu0JA&w=700&q=85",
-        body: "Freshly baked everyday",
+        body: "Yes, we know this is a Chik-fil-a chicken sandwich",
         price: 5.50
       },
 
@@ -67,11 +67,55 @@ router.get('/seed', (req, res) => {
         image: "https://cdn-image.foodandwine.com/sites/default/files/1509031600/arugua-and-squash-salad-XL-RECIPE1217.jpg",
         body: "Freshly baked everyday",
         price: 3.50
+      },
+
+      {
+        name: "Smoked Chicken Fish",
+        image: "https://i.kym-cdn.com/entries/icons/original/000/021/155/Fish_wearing_a_chicken_smoking_a_cigarette_cover.jpg",
+        body: "What has science done?",
+        price: 22.00
+      },
+
+      {
+        name: "Geoduck",
+        image: "http://cdn.shopify.com/s/files/1/1349/1385/products/geoduck_grande.jpg?v=1467307274",
+        body: "I promise it's a delicacy and not a penis",
+        price: 15.00
+      },
+
+      {
+        name: "MRE",
+        image: "https://images-na.ssl-images-amazon.com/images/I/71mEOs3zHPL._SY550_.jpg",
+        body: "That's a good, little soldier",
+        price: 7.00
+      },
+
+      {
+        name: "Cinder Block",
+        image: "https://images.homedepot-static.com/productImages/57e41fa9-bcba-4aff-970f-4123914549b1/svn/oldcastle-cinder-blocks-30161345-64_1000.jpg",
+        body: "Excellent source of minerals and manliness",
+        price: 1.50 
+      },
+
+      {
+        name: "Grandma",
+        image: "http://www.smartsandstamina.com/wp-content/uploads/2013/07/Grandma.jpg",
+        body: "It's her time",
+        price: 32.00
+      },
+
+      {
+        name: "New York Style Cheesecake",
+        image: "https://www.onceuponachef.com/images/2017/12/NY-Cheesecake-575x434.jpg",
+        body: "Your choice of sauce - chocolate, raspberry, or grandma",
+        price: 5.00
       }
     ], (err, addItem) => {
       res.send('items added')
   });
 });
+
+
 
 
 //-------------------------------------------------------

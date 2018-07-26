@@ -81,6 +81,7 @@ router.get('/', async (req, res, next)=>{
 
 
 
+
 // ORDER CREATE route -- the button mentioned above should hit this route
 // this route should:
 // 
@@ -120,7 +121,7 @@ router.post('/', async (req, res, next) => {
 
   // DONE get item from database  
   // DONE get current order object from database
-  // push item into items array of current order object you just got from db (and save)
+  // DONE push item into items array of current order object you just got from db (and save)
   // DONE redirect to cart (order show page) (so user can see item got added)
 
 router.post('/additem', async (req, res, next) => {

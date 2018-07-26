@@ -84,10 +84,6 @@ router.post('/register', (request, response) => {
   const password = request.body.password;
   const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
-  // Create an object to enter into the user model
-  const userDbEntry = {};
-  userDbEntry.username = request.body.username;
-  userDbEntry.password = passwordHash;
 
   // PREVENT DUPE USERNAMES
   // if a user exists in the db with the desired username
@@ -101,6 +97,19 @@ router.post('/register', (request, response) => {
     } 
     // (a user does not already exist in the db with that username)
     else {
+      // Create new user
+      const userDbEntry = {};
+      userDbEntry.username = request.body.username;
+      userDbEntry.password = passwordHash;
+      userDbEntry.firstName = request.body.firstName;
+      userDbEntry.lastName = request.body.lastName;
+      userDbEntry.address = request.body.address;
+      userDbEntry.city = request.body.city;
+      userDbEntry.state = request.body.state;
+      userDbEntry.zip = request.body.zip;
+      userDbEntry.phone = request.body.phone;
+      userDbEntry.email = request.body.email;
+
       // Create entry into database
       User.create(userDbEntry, (err, user) => {
         request.session.username = user.username;
@@ -113,10 +122,15 @@ router.post('/register', (request, response) => {
 });
 
 
+
 router.get('/profile', (request, response) => {
-  response.render('auth/profile.ejs', {
-    username: request.session.username,
-    loggedIn: request.session.loggedIn
+  User.findOne({username: request.session.username}, (err, foundUser) => {
+    console.log(foundUser, " this is foundUser in GET /auth/profile")
+    response.render('auth/profile.ejs', {
+      userData: foundUser,
+      username: request.session.username,
+      loggedIn: request.session.loggedIn
+    });
   });
 });
 
@@ -133,7 +147,6 @@ router.post('/profile', (request, response) => {
   userDbEntry.username = request.body.username;
   userDbEntry.password = passwordHash;
 
-
   // PREVENT DUPE USERNAMES
   // if a user exists in the db with the desired username
   User.find({username: request.body.username}, (err, foundUsers) => {
@@ -145,6 +158,8 @@ router.post('/profile', (request, response) => {
       });
   });
 });
+
+
 
 // Logging out
 router.get('/logout', (request, response) => {

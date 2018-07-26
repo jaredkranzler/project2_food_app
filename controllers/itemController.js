@@ -42,7 +42,7 @@ router.get('/seed', (req, res) => {
   Item.create(
     [
       {
-        name: "Chocaolate Chip Cookies" ,
+        name: "Chocolate Chip Cookies" ,
         image: "https://hips.hearstapps.com/del.h-cdn.co/assets/16/48/1480711863-delish-peanut-butter-chip-cookies-1.jpg",
         body: "Freshly baked everyday",
         price: 9.50

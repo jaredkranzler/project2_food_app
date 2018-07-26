@@ -31,7 +31,7 @@ router.get('/cart', async (req, res) => {
   // render and pass order.items to template
   // get current order object from database
   const foundOrder = await Order.findById(req.session.orderId);
-  console.log(foundOrder, "foundOrder in POST /orders/additem");
+  // console.log(foundOrder, "foundOrder in POST /orders/additem");
   res.render('orders/cart.ejs', {
     items: foundOrder.items,
     username: req.session.username,
@@ -77,7 +77,7 @@ router.get('/', async (req, res, next)=>{
 
 
 // // new: (new order) 
-// goal: list the items in the current order
+// Done: goal: list the items in the current order
 // IGNORE this for now
 
 
@@ -94,7 +94,7 @@ router.post('/', async (req, res, next) => {
     try {
         //creates db object for a new order, captures that db object in createdOrder variable
         const createdOrder = await Order.create({});
-        console.log(createdOrder, "this is the order we just created")
+        // console.log(createdOrder, "this is the order we just created")
         // stores id of the order we just created within session object
         req.session.orderId = createdOrder.id;
 
@@ -126,7 +126,7 @@ router.post('/', async (req, res, next) => {
   // DONE redirect to cart (order show page) (so user can see item got added)
 
 router.post('/additem', async (req, res, next) => {
-    console.log(req.body);
+    // console.log(req.body);
     try {
       // get item with this id from items collection
       // push into items array in the currently open order
@@ -180,14 +180,17 @@ router.post('/additem', async (req, res, next) => {
   // put /decrease/:itemid/
 
 
-router.put('/:id', async (req, res) => {
+router.put('/cart/:itemid', async (req, res) => {
   try {
-    const updatedOrder = await Order.findbyIdAndUpdate(req.params.id, req.body);
-    const foundUser = await User.findOne({'order._id': req.params.id})
-    foundUser.orders.items.id(req.params.id).remove();
-    foundUser.orders.push(updatedOrder);
-    const data = await foundUser.save();
-    res.redirect('/orders');
+      const foundItem = await Item.findById(req.params.itemid);
+      console.log(foundItem, "+++++++++++++++++")
+      const foundOrder = await Order.findById(req.session.orderId);
+      console.log(foundOrder, "-----------------")
+      foundOrder.items.id(req.params.itemid).remove();
+      const data = await foundOrder.save();
+      console.log(data, "_+_+_+_+_+__+")
+
+    res.redirect('/orders/cart');
   } catch (err) {
 
     res.send(err)
@@ -202,29 +205,20 @@ router.put('/:id', async (req, res) => {
 // cancel the order
 // this route should be hit by a "Cancel order button"
 // this may mean you need a cancel order button on your show page
-router.delete('cart', async (req, res, next) => {
-  try {
-    const foundItem = await Item.findOne(req.body).remove();
-    res.redirect('./cart')
-  } catch (err) {
-    next(err, '<------------delete')
-    res.send(err)
-  }
-});
+// router.delete('/cart', async (req, res, next) => {
+//   try {
+//     const foundItem   = await Item.findOne(req.body).remove();
+//     res.redirect('./cart')
+//   } catch (err) {
+//     next(err, '<------------delete')
+//     res.send(err)
+//   }
+// });
 
 
 //--------------------------------------------------------------------------------------
 module.exports = router;
 //--------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
 
 
 

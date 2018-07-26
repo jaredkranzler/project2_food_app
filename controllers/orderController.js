@@ -30,16 +30,18 @@ router.get('/cart', async (req, res) => {
   // 1. get order obj fromdb
   // render and pass order.items to template
   // get current order object from database
-  const foundOrder = await Order.findById(req.session.orderId);
+  try { const foundOrder = await Order.findById(req.session.orderId);
   // console.log(foundOrder, "foundOrder in POST /orders/additem");
   res.render('orders/cart.ejs', {
     items: foundOrder.items,
     username: req.session.username,
     loggedIn: req.session.loggedIn
+
   });
+} catch (err) {
+  res.send (err)
+}
 });
-
-
 
 
 // menu route suggested URL change: /orders/menu
@@ -49,6 +51,7 @@ router.get('/', async (req, res, next)=>{
       // const foundOrder = await Order.find({});
       const foundAllItem = await Item.find({});
       // this should be orders/show.ejs,
+      console.log(req.session.orderId, " this is req.session.orderId in menu route")
       res.render('orders/index.ejs', {
         orderId: req.session.orderId,
         items: foundAllItem,
@@ -61,7 +64,10 @@ router.get('/', async (req, res, next)=>{
 });
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 190aac456be5e0dd1e6e47b7d0b7ffcfd4dae69c
 // LAST THING
 // another place create order button could go 
 // is in order index.  create order index route here
@@ -174,16 +180,20 @@ router.post('/additem', async (req, res, next) => {
   // put /decrease/:itemid/
 
 
+// ----------------------------------------------------------------------------------------
+// Remove from Cart
 router.put('/cart/:itemid', async (req, res) => {
   try {
+      // find the item and the order and delete item from order and save
       const foundItem = await Item.findById(req.params.itemid);
-      console.log(foundItem, "+++++++++++++++++")
       const foundOrder = await Order.findById(req.session.orderId);
-      console.log(foundOrder, "-----------------")
       foundOrder.items.id(req.params.itemid).remove();
       const data = await foundOrder.save();
-      console.log(data, "_+_+_+_+_+__+")
 
+      // find the user and delete the item from the user.order and save
+      const foundUser = await User.findOne({ username: req.session.username });
+      foundUser.orders.id(req.session.orderId).items.id(req.params.itemid).remove()
+      const userData = await foundUser.save();
     res.redirect('/orders/cart');
   } catch (err) {
 
@@ -192,22 +202,35 @@ router.put('/cart/:itemid', async (req, res) => {
 });
 
 
-
 //--------------------------------------------------------------------------------------
 // DELETE
 
 // cancel the order
 // this route should be hit by a "Cancel order button"
 // this may mean you need a cancel order button on your show page
-// router.delete('/cart', async (req, res, next) => {
-//   try {
-//     const foundItem   = await Item.findOne(req.body).remove();
-//     res.redirect('./cart')
-//   } catch (err) {
-//     next(err, '<------------delete')
-//     res.send(err)
-//   }
-// });
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const foundOrder = await Order.findByIdAndRemove(req.session.orderId);
+    console.log(foundOrder, "found order biatch------------=======")
+    const foundUser = await User.findOne({ username: req.session.username });
+    console.log(foundUser, "found order USERSSSSSSSS------------=======")
+
+    foundUser.orders.id(req.session.orderId).remove()
+        console.log( "found and removed sukka------------=======")
+
+    const userData = await foundUser.save();
+
+    req.session.orderId = false
+    console.log(req.session.orderId, " this is req.session.orderId in the order cancel route after we did all the deletes")
+
+
+    res.redirect('/')
+  } catch (err) {
+    next(err)
+    res.send(err)
+  }
+});
 
 
 //--------------------------------------------------------------------------------------

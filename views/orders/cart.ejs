@@ -10,6 +10,12 @@
       <!-- add checkout button  -->
 
     <main>
+      <form action="/orders/cart?_method=DELETE" method="post">
+
+        <input type="submit" value="Delete Order"/>
+
+      </form>
+
       <section>
       <ul>
         <% for(let i = 0; i < items.length; i++){ %>

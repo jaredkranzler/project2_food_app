@@ -22,3 +22,18 @@ ul {
   list-style-type: none;
 }
 
+/*div, #personal {
+  border: solid 2px green;
+  background: yellow;
+  padding: 20px;
+  height: 50%;
+  width: 50%;
+}
+
+div, .profile {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}*/
+

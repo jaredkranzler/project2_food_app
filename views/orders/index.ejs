@@ -13,7 +13,7 @@
             <li>
                 
               <h3><%=items[i].name%></h3>
-              <div><img src="<%=items[i].image%>"></div> <!-- try separating into its own div to resize -->
+              <img src="<%=items[i].image%>">
               <h3><%=items[i].body%></h3>
               <h3><%=items[i].price%></h3>
               <form action="/orders/additem" method="POST">

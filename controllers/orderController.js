@@ -30,17 +30,22 @@ router.get('/cart', async (req, res) => {
   // 1. get order obj fromdb
   // render and pass order.items to template
   // get current order object from database
-  try { const foundOrder = await Order.findById(req.session.orderId);
-  // console.log(foundOrder, "foundOrder in POST /orders/additem");
-  res.render('orders/cart.ejs', {
-    items: foundOrder.items,
-    username: req.session.username,
-    loggedIn: req.session.loggedIn
+  
 
-  });
-} catch (err) {
-  res.send (err)
-}
+      try { 
+    
+      const foundOrder = await Order.findById(req.session.orderId);
+      
+      // console.log(foundOrder, "foundOrder in POST /orders/additem");
+      res.render('orders/cart.ejs', {
+        items: foundOrder.items,
+        username: req.session.username,
+        loggedIn: req.session.loggedIn
+      });
+    } catch (err) {
+      console.log(err)
+      res.send(err)
+    }
 });
 
 

@@ -40,7 +40,8 @@ app.get('/partials/', (req, res) => {
 app.get('/', (request, res) => {
   res.render('home.ejs', { 
     username: request.session.username,
-    loggedIn: request.session.loggedIn
+    loggedIn: request.session.loggedIn,
+    orderId: !!request.session.orderId
   });
 });
 

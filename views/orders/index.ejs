@@ -7,23 +7,27 @@
 
 <% if (orderId) { -%>
 
-  <div class="box">
-    <ul>
-        <% for (let i = 0; i < items.length; i++) { %>
-            <li>
-                
-              <h3><%=items[i].name%></h3>
+      <ul>
+        <% for (let i = 0; i < items.length; i++) { %>    
+          <div class="box">
+
+            <div class="image">    
               <img src="<%=items[i].image%>">
+            </div>
+
+            <div class ="text">
+              <h3><%=items[i].name%></h3>
               <h3><%=items[i].body%></h3>
               <h3><%=items[i].price%></h3>
               <form action="/orders/additem" method="POST">
                 <input type="hidden" name="itemid" value="<%=items[i].id%>">
-                <input type="submit" value="Add to Cart"/>              
+                <input type="submit" value="Add to Cart"/>
               </form>
-            </li>
+            </div>
+          </div>
+           
         <% } %>
-    </ul>
-  </div>
+      </ul>
 
 <% } else { -%>
 

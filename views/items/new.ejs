@@ -19,11 +19,11 @@
               <h3><%=items[i].name%></h3>
               <h3><%=items[i].body%></h3>
               <h3><%=items[i].price%></h3>
+
               <form action="/items/<%=items[i]._id%>?_method=DELETE" method="post">
                <input type="submit" value="Delete item"/>
               </form>
             </div>
-
 
          </div>
       <% } %>

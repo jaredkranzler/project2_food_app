@@ -30,6 +30,7 @@
               <h3><%=items[i].price%></h3>
 
               <form action="/orders/cart/<%=items[i].id%>?_method=PUT" method="post">
+                <!-- <input type="number" name="amount"/> -->
                 <input type="submit" value="Remove"/>
               </form>
             </div>

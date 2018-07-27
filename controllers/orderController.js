@@ -64,10 +64,7 @@ router.get('/', async (req, res, next)=>{
 });
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 190aac456be5e0dd1e6e47b7d0b7ffcfd4dae69c
 // LAST THING
 // another place create order button could go 
 // is in order index.  create order index route here

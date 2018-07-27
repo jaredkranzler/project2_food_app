@@ -14,13 +14,42 @@ header, footer {                            /*alternative color opts*/
 img {
   height: 100%;
   max-height: 200px;
-/*  width: 100%;
-  max-width: 200px;*/
+  width: 100%;
+  max-width: 200px;
+  border: 7px solid rgba(0, 0, 0, .7);
+  border-radius: 10%; 
 }
 
 ul {
   list-style-type: none;
 }
+
+#register {
+ margin: 0 0 20px 0;
+}
+
+#profile {
+  margin: 20px 0 0 0; 
+}
+
+.box {
+  display: flex;
+  justify-content: space-around;
+  width: 600px;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.image {
+  margin: 20px 0 20px 0;
+}
+
+.text {
+  width: 300px;
+  word-wrap: normal;
+}
+
+
 
 /*div, #personal {
   border: solid 2px green;

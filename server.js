@@ -3,7 +3,9 @@ const app = express();
 const session = require('express-session'); // for login
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
+
 
 // db connection code
 require('./db/db');

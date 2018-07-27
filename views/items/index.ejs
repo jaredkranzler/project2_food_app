@@ -9,22 +9,26 @@ This is the admin page for editing menu
 
 
 
-<div class="box">
   <ul>
       <% for (let i = 0; i < items.length; i++) { %>
-          <li>
-              
-            <h3><%=items[i].name%></h3>
-            <img src="<%=items[i].image%>">
-            <h3><%=items[i].body%></h3>
-            <h3><%=items[i].price%></h3>
-            <form>
-              <input type="submit" value="Add to Cart"/>
-            </form>
-          </li>
+        <div class="box">
+            
+            <div class="image">
+              <img src="<%=items[i].image%>">
+            </div>
+            
+            <div class ="text">
+              <h3><%=items[i].name%></h3>
+              <h3><%=items[i].body%></h3>
+              <h3><%=items[i].price%></h3>
+              <form>
+                <input type="submit" value="Add to Cart"/>
+              </form>
+            </div>
+
+        </div>
       <% } %>
   </ul>
-</div>
 
 
 

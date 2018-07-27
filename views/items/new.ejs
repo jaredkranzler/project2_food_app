@@ -9,17 +9,23 @@
 
   <ul>
       <% for (let i = 0; i < items.length; i++) { %>
-          <li>
-              
-            <h3><%=items[i].name%></h3>
-            <img src="<%=items[i].image%>">
-            <h3><%=items[i].body%></h3>
-            <h3><%=items[i].price%></h3>
+          <div class="box">
 
-            <form action="/items/<%=items[i]._id%>?_method=DELETE" method="post">
-              <input type="submit" value="Delete item"/>
-            </form>
-          </li>
+            <div class="image">
+              <img src="<%=items[i].image%>">
+            </div>
+
+            <div class ="text">
+              <h3><%=items[i].name%></h3>
+              <h3><%=items[i].body%></h3>
+              <h3><%=items[i].price%></h3>
+
+              <form action="/items/<%=items[i]._id%>?_method=DELETE" method="post">
+               <input type="submit" value="Delete item"/>
+              </form>
+            </div>
+
+         </div>
       <% } %>
   </ul>
 

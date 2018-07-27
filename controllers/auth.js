@@ -42,7 +42,7 @@ router.get('/register', (request, response) => {
     request.session.message = null
     response.render('auth/register.ejs', {
       message: message,
-      loggedIn: req.session.loggedIn      
+      loggedIn: request.session.loggedIn      
     });
   } else {
     response.render('auth/register.ejs', {

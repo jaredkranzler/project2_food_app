@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/restauranteur';
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/restauranteur';
 
-mongoose.connect('mongoUri')
-
+mongoose.connect(mongoUri, { useNewUrlParser: true })
 
 mongoose.connection.on('connected', () => {
   console.log("mongoose is connected")

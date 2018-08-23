@@ -34,6 +34,9 @@ by: Jared Kranzler & Steve Brennison
 
 ![alt text](https://github.com/jaredkranzler/project2_food_app/blob/master/Wireframe/6-Confirm.png)
 
+![alt text](https://github.com/jaredkranzler/project2_food_app/blob/master/Wireframe/ORder%20history.png)
+
+
 ```
 itemSchema({
   title: String,

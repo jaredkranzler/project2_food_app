@@ -32,20 +32,21 @@ router.get('/cart', async (req, res) => {
   // get current order object from database
   
 
-      try { 
-    
-      const foundOrder = await Order.findById(req.session.orderId);
-      
-      // console.log(foundOrder, "foundOrder in POST /orders/additem");
+  try { 
+    if (!req.session.orderId){
+      res.redirect('/')
+    }else {
+      const foundOrder = await Order.findById(req.session.orderId);   
       res.render('orders/cart.ejs', {
         items: foundOrder.items,
         username: req.session.username,
         loggedIn: req.session.loggedIn
       });
-    } catch (err) {
-      console.log(err)
-      res.send(err)
     }
+  } catch (err) {
+    console.log(err)
+    res.send(err)
+  }
 });
 
 
@@ -53,6 +54,7 @@ router.get('/cart', async (req, res) => {
 // list of items with button to add -- this route is almost done as is
 router.get('/', async (req, res, next)=>{
     try {
+      const foundUser = await User.findOne({ username: req.session.username });
       // const foundOrder = await Order.find({});
       const foundAllItem = await Item.find({});
       // this should be orders/show.ejs,
@@ -64,7 +66,7 @@ router.get('/', async (req, res, next)=>{
         loggedIn: req.session.loggedIn
       });
     } catch (err) {
-      next(err)
+       next(err)
     }
 });
 
@@ -95,25 +97,23 @@ router.get('/', async (req, res, next)=>{
 //   store info in session to indicate that
 //   there's an open order
 router.post('/', async (req, res, next) => {
-    try {
-        //creates db object for a new order, captures that db object in createdOrder variable
-        const createdOrder = await Order.create({});
-        // console.log(createdOrder, "this is the order we just created")
-        // stores id of the order we just created within session object
-        req.session.orderId = createdOrder.id;
-
-        // push that created order object in the user's orders array
-        User.findOne({ username: req.session.username }, (err, foundUser) => {
-          foundUser.orders.push(createdOrder);
-          foundUser.save((err, data) => {
-            if(err) console.log(err);
-            res.redirect('/orders')            
-          })
-        });
-
-    }  catch (err2) {
-      next(err2, "hey")     
-    }
+  try {
+      //creates db object for a new order, captures that db object in createdOrder variable
+      const createdOrder = await Order.create({});
+      // console.log(createdOrder, "this is the order we just created")
+      // stores id of the order we just created within session object
+      req.session.orderId = createdOrder.id;
+      // push that created order object in the user's orders array
+      User.findOne({ username: req.session.username }, (err, foundUser) => {
+        foundUser.orders.push(createdOrder);
+        foundUser.save((err, data) => {
+          if(err) console.log(err);
+          res.redirect('/orders')            
+        })
+      });
+  }  catch (err2) {
+    next(err2, "hey")     
+  }
 });
 
 

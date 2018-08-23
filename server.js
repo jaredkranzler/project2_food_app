@@ -29,6 +29,7 @@ app.use('/orders', orderController);
 
 
 app.get('/partials/', (req, res) => {
+
   User.findById(req.params.id, (err, foundUser)=> {
     res.render('partials/header.ejs', {
       user: foundUser

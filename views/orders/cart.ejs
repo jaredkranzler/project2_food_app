@@ -18,7 +18,6 @@
       <ul>
         <% for(let i = 0; i < items.length; i++){ %>
           <div class="box">
-          
             <div class="image">
               <img src="<%=items[i].image%>">
             </div>
@@ -32,12 +31,27 @@
                 <!-- <input type="number" name="amount"/> -->
                 <input type="submit" value="Remove"/>
               </form>
-            </div>
-          
-          
-        </div>
-        <% } %>
+            </div>          
+          </div>
       </ul>
+        <% } %>
+      </section>
+      <section>
+        <% const totalArray = [];%>
+        <% let sum = 0; %>
+        <% for(let i = 0; i < items.length; i++){ %>
+          <% totalArray.push(items[i].price) %>
+          <%sum += totalArray[i]%>
+        <% } %>
+        <% const totalTax = (sum * .1025) %>
+        <% const tax = totalTax.toFixed(2)%>
+        <% const addedTotal = (totalTax + sum) %>
+        <% const total = addedTotal.toFixed(2)%>
+        <div>
+         <h3>Subtotal $<%= sum %></h3>
+         <h3>Tax $<%=tax%></h3>
+         <h3>Total $<%= total%></h3>
+       </div>
       </section>
 
     </main>

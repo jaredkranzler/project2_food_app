@@ -7,7 +7,7 @@ const orderSchema = mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  newOrder: Boolean, 
+  newOrder: Boolean,
   items: [Item.schema]
 });
 

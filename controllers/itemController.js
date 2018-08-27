@@ -162,7 +162,7 @@ router.delete('/:id', async (req, res, next) => {
 router.put('/:id', async (req, res, next)=>{
   try {
     const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, {new: true});
-    // Find the user with that photo
+    // Find the user with that 
     const foundUser = await User.findOne({'items._id': req.params.id});
       // If the user is the same as it was before
       // first find the photo and removing, req.params.id = photos id

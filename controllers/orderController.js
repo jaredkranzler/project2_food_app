@@ -55,10 +55,7 @@ router.get('/cart', async (req, res) => {
 router.get('/', async (req, res, next)=>{
     try {
       const foundUser = await User.findOne({ username: req.session.username });
-      // const foundOrder = await Order.find({});
       const foundAllItem = await Item.find({});
-      // this should be orders/show.ejs,
-      console.log(req.session.orderId, " this is req.session.orderId in menu route")
       res.render('orders/index.ejs', {
         orderId: req.session.orderId,
         items: foundAllItem,
@@ -70,7 +67,22 @@ router.get('/', async (req, res, next)=>{
     }
 });
 
+router.get('/checkout', async (req, res, next) => { console.log("hit GET /orders/checkout")
+  try {   
 
+    const foundUser = await User.findOne({ username: req.session.username });
+    const foundOrder = await Order.findById(req.session.orderId);  
+
+    req.session.orderId = null
+    res.render('orders/show.ejs', {
+        orderId: req.session.orderId,
+        username: req.session.username,
+        loggedIn: req.session.loggedIn
+    })
+  } catch (err) {
+    next(err)
+  }
+});
 
 // LAST THING
 // another place create order button could go 

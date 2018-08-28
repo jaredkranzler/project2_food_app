@@ -1,31 +1,117 @@
 body {
   text-align: center;
   font-family: tinos;
-  background-color: #E8E6D1;
-  /*background: url("http://i.stack.imgur.com/kb0Zm.jpg");*/
-  background: url("https://www.publicdomainpictures.net/pictures/20000/velka/rough-beige-paper-texture.jpg");
+  background-color: #f2f2f220;
+  margin-left: -10px;
 }
 
+a:link {
+color: #121212;
+}
+a:visited {
+color: black;
+}
+a:hover {
+color: #ffc900;
+}
+.username{
+  text-align: center;
+  margin-right: 70px;
+  margin-top: 15px;
+  margin-bottom: 0px; 
+  font-size: 30px;
+}
+.profile{
+  display: flex;
+  margin-top: -10px;
+  margin-bottom: -15px;
+}
+.logout{
+  display: flex;
+  margin-top: -10px;
+  margin-bottom: -15px;
 
+}
+h5{
+  margin-left: 20px;
+}
+.navLogins {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 0px;
+  margin-top: -20px;
+  font-size: 20px;
+}
+.appName {
+  text-shadow: 0px 3px 10px #1B1B1B80;
+  font-size: 50px; 
+  max-width: 0px 100%;
+  margin-top: -10px;
+  margin-bottom: 0px;
+  border: 3px solid #ffffff70;
+  background: #ffc900;
+}
+.navBar {
+  font-size: 30px;
+  word-spacing: 80px;
+  margin-bottom: -15px;
+}
+.footer {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  justify-content: center; 
+  background-color: #A6382C;  
+  padding: 20px; 
+  margin-top: 980px;
+  margin-left: -10px;
+  border: 1px solid #0d0d0d70;
 
-header, footer {                            /*alternative color opts*/
-  background-color: rgba(119, 24, 31, .8);  /*8E262A 142, 38, 42; 154, 33, 30*/
+}
+header, footer {                            
+  background-color: #A6382C;  
   padding: 20px;
+  margin-left: -10px;
+  box-shadow: 0px 3px 10px #1B1B1B60;
+
 }
 
+.headerFixed{
+  position: fixed;
+  z-index: 3;
+  width: 100%;
+  margin-top: -10px;
+}
 img {
   height: 100%;
   max-height: 200px;
   width: 100%;
   max-width: 200px;
-  border: 7px solid rgba(0, 0, 0, .7);
-  border-radius: 10%; 
+  border: 1px solid rgba(0, 0, 0, .7);
+  border-radius: 4%; 
+  margin-left: 10px;
 }
 
 ul {
   list-style-type: none;
+/*  border: 4px solid #ffc900;
+*/  list-style: none; 
 }
 
+.container {
+  display: flex;
+  justify-content: center;
+}
+.main {
+  position: absolute;
+  margin-top: 230px;
+  margin-bottom: 80px;
+  display: flex;
+  justify-content: center;
+  text-shadow: 0px 3px 10px #1B1B1B50;
+
+/*  border: 2px solid purple;
+*/}
 #register {
  margin: 0 0 20px 0;
 }
@@ -40,8 +126,16 @@ ul {
   width: 600px;
   align-items: center;
   margin: 0 auto;
+  border: 1px solid black;
+  margin-left: -40px;
+  margin-bottom: 20px;
 }
+.box:hover {
+  background-color: #ffc90080;
+  text-shadow: 0px 3px 10px #1B1B1B90;
 
+
+}
 .image {
   margin: 20px 0 20px 0;
 }
@@ -49,22 +143,73 @@ ul {
 .text {
   width: 300px;
   word-wrap: normal;
+  margin-bottom: 30px;
+  margin-top: 10px;
+
 }
 
-
-
-/*div, #personal {
-  border: solid 2px green;
-  background: yellow;
-  padding: 20px;
-  height: 50%;
-  width: 50%;
-}
-
-div, .profile {
-  display: flex;
-  flex-direction: column;
+.admin {
+  display: inline-flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-}*/
+  border: 5px solid red;
+  margin-left: 18px;
+  width: 750px;
+}
+.adminHeader {
+  display: inline-flex;
+/*  border: 2px solid purple;
+*/justify-content: center;
+  position: absolute;
+  margin-top: -20px;
+}
+.adminForm {
+  display: inline-flex;
+  position: fixed;
+/*  border: 2px solid purple;
+*/align-items: baseline;
+  margin-top: -110px;
+  background: #cccccc;
+}
+textarea{
+  margin-bottom: -23.6px;
+}
+.inputItem{
+  width: 80px;
+  height: 50px;
+}
+.submitItem:hover{
+  background-color: #ffc900;
 
+
+}
+.submitItem:link {
+background-color: #A6382C;
+}
+.adminList {
+  display: flex;
+  border: 1px solid black;
+  overflow: auto;
+  max-height: 600px;
+  max-width: 600px;
+  width: 100%;
+
+
+}
+.adminDelete{
+  height: 40px;
+  width: 100px;
+  font-size: 15px;
+}
+.adminDelete:hover {
+  background-color: grey;
+  color: white;
+}
+.adminScroll {
+  display: inline-flex;
+  justify-content: center;
+  overflow: hidden;
+/*  border: 1px solid black;
+*/margin-top: 30px;
+  padding: 20px;
+  width: 100%;
+}

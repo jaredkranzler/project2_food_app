@@ -1,4 +1,7 @@
 <%- include('../partials/header'); -%>
+<div class="container">
+
+    <main class="main">
 
 <h2>Your Cart</h2>
           
@@ -9,7 +12,6 @@
       <!-- display user order history on home page -->
       <!-- add checkout button  -->
 
-    <main>
       <form action="/orders/cart?_method=DELETE" method="post">
         <input type="submit" value="Delete Order"/>
       </form>
@@ -17,7 +19,7 @@
       <section>
       <ul>
         <% for(let i = 0; i < items.length; i++){ %>
-          <div class="box">
+          <li><div class="box">
             <div class="image">
               <img src="<%=items[i].image%>">
             </div>
@@ -26,15 +28,18 @@
               <h3><%=items[i].name%></h3>
               <h3><%=items[i].body%></h3>
               <h3><%=items[i].price%></h3>
-
               <form action="/orders/cart/<%=items[i].id%>?_method=PUT" method="post">
-                <!-- <input type="number" name="amount"/> -->
-                <input type="submit" value="Remove"/>
+                <input type="submit" value="Delete item"/>
               </form>
-            </div>          
-          </div>
-      </ul>
+              <form action="/orders/update/<%items[i].id%>?_method=PUT" method="POST">
+                <input type="number" name="<%items[i].amountInOrder%>" placeholder="<%=items[i].amountInOrder%>"/>
+                <input type="submit" value="update item"/>
+              </form>
         <% } %>
+            </div>
+          </div></li>
+      </ul>
+        
       </section>
       <section>
         <% const totalArray = [];%>
@@ -57,6 +62,9 @@
         <input type="submit" value="submit order"/>
       </form>
     </main>
-
+  </div>
+<footer class="footer">
+  SITE © 2018 by Jared & Steve 
+</footer>
 
 <%- include('../partials/footer'); -%>

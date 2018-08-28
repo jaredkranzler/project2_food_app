@@ -36,8 +36,9 @@ router.get('/cart', async (req, res) => {
     if (!req.session.orderId){
       res.redirect('/')
     }else {
-      const foundOrder = await Order.findById(req.session.orderId);   
+      const foundOrder = await Order.findById(req.session.orderId); 
       res.render('orders/cart.ejs', {
+        orders: foundOrder,
         items: foundOrder.items,
         username: req.session.username,
         loggedIn: req.session.loggedIn
@@ -158,17 +159,20 @@ router.post('/additem', async (req, res, next) => {
       // push item into items array of current order object you just got from db (and save)      
       foundOrder.items.push(foundItem);
       const data = await foundOrder.save();
-
       // get user
       // find this order in user's order's array
       // add this item to that array too
       const foundUser = await User.findOne({ username: req.session.username });
-      foundUser.orders.id(req.session.orderId).items.push(foundItem);
+      
+      // for () {
+        foundUser.orders.id(req.session.orderId).items.push(foundItem);
+      // }
+      
       // console.log(foundUser.orders.id(req.session.orderId).items, " this is where we're trying to push ")
       const userData = await foundUser.save();
 
       // redirect
-      res.redirect('/orders/cart')
+      res.redirect('/orders')
 
     }  catch (err){
 
@@ -246,6 +250,21 @@ router.delete('/:id', async (req, res, next) => {
   }
 });
 
+// ---------------------------------------------
+// UPDATE PUT - update items in cart and order in database
+router.put('/update/:id', async (req, res, next)=>{
+  try {
+    const foundOrder = await Order.findById(req.session.orderId)
+    const orderItem = foundOrder.items.id(req.params.itemid)
+    foundOrder.Items.amountInOrder.splice(orderItem.amountInOrder);
+    const data = await foundOrder.items.save();
+    res.redirect('/orders/cart');
+
+  } catch (err) {
+    next(err)
+    res.send(err)
+    }
+});
 
 //--------------------------------------------------------------------------------------
 module.exports = router;

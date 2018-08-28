@@ -5,7 +5,7 @@ const itemSchema = mongoose.Schema({
   image: String,
   body: String,
   price: Number,
-  amount: Number
+  amountInOrder: Number
 });
 
 const Item = mongoose.model('Item', itemSchema);

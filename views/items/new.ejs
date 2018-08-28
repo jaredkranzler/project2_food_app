@@ -2,11 +2,13 @@
 
 
 <!-- THIS IS ADMIN MENU PAGE -->
-
-
-  <h1>Menu</h1>
-
-
+<div class="container admin">
+<main class="main">
+<div class="adminHeader">
+  <h1>Admin Menu Page</h1>
+</div>
+<div class="adminScroll">
+<div class="adminList">
   <ul>
       <% for (let i = 0; i < items.length; i++) { %>
           <div class="box">
@@ -19,34 +21,38 @@
               <h3><%=items[i].name%></h3>
               <h3><%=items[i].body%></h3>
               <h3><%=items[i].price%></h3>
-
               <form action="/items/<%=items[i]._id%>?_method=DELETE" method="post">
-               <input type="submit" value="Delete item"/>
+               <input class="adminDelete" type="submit" value="Delete item"/>
               </form>
             </div>
 
          </div>
       <% } %>
   </ul>
-
-
+</div>
+</div>
 <!--     <h2>Entrees</h2>
 
     <h2>Dessert</h2>
 
     <h2>Drinks</h2>
  -->
-
+<div class="adminForm">
 
 <form action="/items" method="post">
-    <input type="text" name="name" placeholder="item name">
-    <input type="url" name="image" placeholder="image url">
-    <textarea name="body" placeholder="item description"></textarea>
-    <input type="text" name="price" placeholder="price">
-    <input type="submit" value="Add Item to Menu">
+    <input class="inputItem" type="text" name="name" placeholder="item name">
+    <input class="inputItem" type="url" name="image" placeholder="image url">
+    <textarea class="inputItem" name="body" placeholder="item description"></textarea>
+    <input class="inputItem" type="text" name="price" placeholder="price">
+    <input class="submitItem" type="submit" value="Add Item to Menu">
 </form>
+</div>
+</main>
+</div>
 
-
+<footer class="footer">
+  SITE © 2018 by Jared & Steve 
+</footer>
 
 
   <%- include('../partials/footer'); -%>

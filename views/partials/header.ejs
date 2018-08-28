@@ -9,21 +9,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
-<header>
-<section> 
-  <a href="items/new">Admin</a>
-  <a href="/auth/profile">Profile</a>
+<header class="headerFixed">
+<section class="navLogins"> 
+  <div class="profile">
+  <h5><a href="items/new">Admin</a></h5>
+  <h5><a href="/auth/profile">Profile</a></h5>
+  </div>
+  <div class="profile">
+  <h5 class="username">Welcome <%=username%></h5>
+  </div>
+  <div class="logout">
   <% if (loggedIn) { %>
-    <%=username%> <a href="/auth/logout">Logout</a>
+     <h5><a href="/auth/logout">Logout</a></h5>
   <% } else { %>
-    <a href="/auth/login">Login</a><br>
-    <a href="/auth/register">Sign up</a>
+    <h5><a href="/auth/login">Login</a></h5><br>
+    <h5><a href="/auth/register">Sign up</a></h5>
       <% } %>
+  </div>
 </section>
 
-  <h1>The Restauranteur</h1>
+  <h1 class="appName">The Restauranteur</h1>
   
-  <nav>
+  <nav class="navBar">
     <a href="/">Home</a>
     <a href="/orders">Menu</a>
     <a href="/orders/cart">Cart</a>

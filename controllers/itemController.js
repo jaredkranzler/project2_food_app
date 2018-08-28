@@ -42,72 +42,72 @@ router.get('/seed', (req, res) => {
   Item.create(
     [
       {
-        name: "Chocolate Chip Cookies" ,
-        image: "https://hips.hearstapps.com/del.h-cdn.co/assets/16/48/1480711863-delish-peanut-butter-chip-cookies-1.jpg",
-        body: "Freshly baked everyday",
-        price: 9.50
-      },
-
-      {
-        name: "Pocket Dog" ,
-        image: "https://s33.postimg.cc/ombb7yq9b/pocketdog.jpg",
-        body: "I always have a hot dog in my pocket",
+        name: "Sushi Donut" ,
+        image: "http://www.bravotv.com/sites/nbcubravotv/files/styles/blog-post--mobile/public/field_blog_image/2016/11/feast-week-mashup-poll-promote_0.jpg?itok=xDnLnaGk&timestamp=1480357600",
+        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque rutrum mi eget mi tempus tincidunt. Nullam lacinia consectetur mi at tempus. In hac habitasse platea dictumst. ",
         price: 8.50
       },
 
       {
-        name: "Burger" ,
-        image: "https://imagesvc.timeincapp.com/v3/mm/image?url=https%3A%2F%2Fcdn-image.foodandwine.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2F1519844002%2Ffast-food-mobile-apps-chick-fil-a-FT-BLOG0218.jpg%3Fitok%3D7d_gu0JA&w=700&q=85",
-        body: "Yes, we know this is a Chik-fil-a chicken sandwich",
-        price: 5.50
+        name: "Sushi Burrito" ,
+        image: "https://i1.wp.com/www.onegreenplanet.org/wp-content/uploads/2017/12/lunchbox-upgrade-brown-rice-sushi-burritos.jpg?fit=1200%2C750",
+        body: "Morbi gravida est et maximus ultricies. Cras id ultricies arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut metus commodo, tincidunt lectus vestibulum, semper urna. Suspendisse lobortis ligula tempor lectus vestibulum, vel aliquet libero ornare.",
+        price: 9.50
+      },
+
+      {
+        name: "Salmon" ,
+        image: "http://fitclub.ir/wp-content/uploads/2017/11/%D8%AA%D8%B1%DA%A9%DB%8C%D8%A8-%D8%BA%D8%B0%D8%A7%DB%8C%DB%8C.jpg",
+        body: "Mauris feugiat ligula eu urna sagittis facilisis. Nulla massa mi, lacinia in tincidunt egestas, tristique ac risus. Sed cursus nulla id risus aliquam, a malesuada libero volutpat. Etiam ornare ante non nulla molestie, sit amet lobortis ligula vestibulum. ",
+        price: 14.50
       },
 
       {
         name: "Salad",
         image: "https://cdn-image.foodandwine.com/sites/default/files/1509031600/arugua-and-squash-salad-XL-RECIPE1217.jpg",
-        body: "Freshly baked everyday",
+        body: "Nam enim nibh, suscipit ut egestas at, venenatis vel urna. Nunc at lacus lacinia, scelerisque turpis vitae, sagittis erat. Nunc aliquet, sapien ut placerat varius, lorem felis ultrices mauris, vitae feugiat sapien nunc eget ex. Nunc nibh massa, sodales nec nisl id, rutrum dignissim ipsum.",
         price: 3.50
       },
 
       {
-        name: "Smoked Chicken Fish",
-        image: "https://i.kym-cdn.com/entries/icons/original/000/021/155/Fish_wearing_a_chicken_smoking_a_cigarette_cover.jpg",
-        body: "What has science done?",
+        name: "Pasta",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX5Y6iNBPyeJQBKg5tN26_en3IUZibRFNcZ6uVi_u7ud8P595x",
+        body: "Vestibulum erat mauris, elementum in consectetur vel, fringilla at quam. Etiam convallis justo ut arcu scelerisque, sed tristique tortor luctus.",
         price: 22.00
       },
 
       {
-        name: "Geoduck",
-        image: "http://cdn.shopify.com/s/files/1/1349/1385/products/geoduck_grande.jpg?v=1467307274",
-        body: "I promise it's a delicacy and not a penis",
+        name: "Pizza",
+        image: "https://res.cloudinary.com/norgesgruppen/image/upload/c_fill,f_auto,h_574,q_80,w_945/tbagzeanc4qhrnlanzgi.jpg",
+        body: "Vivamus vitae semper ante. Nulla a tristique magna. Quisque aliquet lectus in elit tempor consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas porta urna sem, nec venenatis ipsum consequat vel. Nunc id purus mi. Maecenas et lacus velit. ",
         price: 15.00
       },
 
       {
-        name: "MRE",
-        image: "https://images-na.ssl-images-amazon.com/images/I/71mEOs3zHPL._SY550_.jpg",
-        body: "That's a good, little soldier",
+        name: "Mozzarella",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPKrl4weU3Y7j-JCk1uwwrehsdk7RPp38NAwLog_AvaPHrSr0z",
+        body: " Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut augue nisl, gravida sit amet fermentum in, consectetur pharetra libero. ",
         price: 7.00
       },
 
       {
-        name: "Cinder Block",
-        image: "https://images.homedepot-static.com/productImages/57e41fa9-bcba-4aff-970f-4123914549b1/svn/oldcastle-cinder-blocks-30161345-64_1000.jpg",
-        body: "Excellent source of minerals and manliness",
+        name: "Crepes",
+        image: "https://img.sndimg.com/food/image/upload/w_896,h_504,c_fill,fl_progressive,q_80/v1/img/recipes/18/41/0/mlUJhy1T3CFzP1eDMACA_DSC_0003.jpg",
+        body: "Mauris enim augue, placerat vitae porta vel, egestas et nisi.",
         price: 1.50 
       },
 
       {
-        name: "Grandma",
-        image: "http://www.smartsandstamina.com/wp-content/uploads/2013/07/Grandma.jpg",
-        body: "It's her time",
+        name: "Brownie a la mode",
+        image: "https://pinchofyum.com/wp-content/uploads/Coconut-Oil-Brownies.jpg",
+        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque rutrum mi eget mi tempus tincidunt. Nullam lacinia consectetur mi at tempus. In hac habitasse platea dictumst. ",
         price: 32.00
       },
 
       {
         name: "New York Style Cheesecake",
-        image: "https://www.onceuponachef.com/images/2017/12/NY-Cheesecake-575x434.jpg",
-        body: "Your choice of sauce - chocolate, raspberry, or grandma",
+        image: "https://cms.splendidtable.org/sites/default/files/styles/w2000/public/coconut-cheesecake-LEDE.jpg?itok=Iixck5x7",
+        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque rutrum mi eget mi tempus tincidunt. Nullam lacinia consectetur mi at tempus. In hac habitasse platea dictumst. ",
         price: 5.00
       }
     ], (err, addItem) => {

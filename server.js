@@ -4,7 +4,9 @@ const session = require('express-session'); // for login
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const PORT = process.env.PORT || 3000;
-
+const User = require('./models/user')
+const Order  = require('./models/order');
+const Item = require('./models/item');
 // db connection code
 require('./db/db');
 
@@ -37,13 +39,31 @@ app.get('/partials/', (req, res) => {
   });
 });
 
+app.get('/', async (req, res, next) => {
+  try {
+  // IF USER NOT LOGGED IN -- 
+    // REDIRECT TO LOGIN PAGE
 
-app.get('/', (request, res) => {
-  res.render('home.ejs', { 
-    username: request.session.username,
-    loggedIn: request.session.loggedIn,
-    orderId: !!request.session.orderId
-  });
+      const foundUser = await User.findOne({ username: req.session.username });
+      if(!req.session.username){ 
+          req.session.message = 'please login first';
+          res.redirect('/auth/login');
+    // ELSE
+      // GET USER FROM SESSION
+      // RETRIEVE USER ORDER HISTORY -- PASS TO TEMPLATE BELOW
+      // USE THIS RENDER AND CHANGE ORDERS BELOW TO THESE ORDERS
+    }else {
+      async = true
+      const foundUser = await User.findOne({ username: req.session.username });
+      res.render('home.ejs', { 
+        username: req.session.username,
+        loggedIn: req.session.loggedIn,
+        orders: foundUser.orders
+      });
+    }
+  } catch (err) {
+    next(err)
+  }
 });
 
 

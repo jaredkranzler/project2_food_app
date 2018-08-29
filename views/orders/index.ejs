@@ -21,7 +21,7 @@
               <h3><%=items[i].body%></h3>
               <h3><%=items[i].price%></h3>
               <form action="/orders/additem" method="POST">
-                <input type="number" name="amount" value="<%items[i].amountInOrder%>"/>
+                <input type="number" name="amount" value="<%=items[i].amountInOrder%>"/>
                 <input type="hidden" name="itemid" value="<%=items[i].id%>">
                 <input type="submit" value="Add to Cart"/>
               </form>

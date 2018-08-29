@@ -8,7 +8,31 @@ const Item = require('../models/item');
 const User = require('../models/user')
 //-------------------------------------------------------------------------
 
+// Home --> order history page
+// router.get('/', async (req, res, next) => {
+//   try {
+//     const foundUser = await User.findOne({ username: req.session.username });
+//     console.log(foundUser)
 
+//     res.send("check the terminal")
+
+
+//     // const foundUserOrder = await foundUser.findById(orders.id);
+//     // const foundOrder = await Order.findById(orders.id);
+//     // for (let i = 0; i < foundUserOrder.length; i++){
+//     //   if (foundUserOrder[i] === foundOrder[i]) {
+//     //   }
+//     // }
+//     //     res.render('home.ejs', { 
+//     //       orders: foundOrder,
+//     //       items: foundOrder.items,
+//     //       username: req.session.username,
+//     //       loggedIn: req.session.loggedIn
+//     //     });
+//   }catch (err) {
+//     next(err)
+//   }
+// })
 
 // ORDER SHOW ROUTE
 // URL should be /cart (GET /orders/cart), since you could store Order ID in session
@@ -70,7 +94,6 @@ router.get('/', async (req, res, next)=>{
 
 router.get('/checkout', async (req, res, next) => { console.log("hit GET /orders/checkout")
   try {   
-
     const foundUser = await User.findOne({ username: req.session.username });
     const foundOrder = await Order.findById(req.session.orderId);  
 
@@ -157,19 +180,23 @@ router.post('/additem', async (req, res, next) => {
       // console.log(foundOrder, "foundOrder in POST /orders/additem");
 
       // push item into items array of current order object you just got from db (and save)      
-      foundOrder.items.push(foundItem);
+      // foundOrder.items.push(foundItem);
+      for (let i = 0; i < req.body.amount; i++) {
+        foundOrder.items.push(foundItem);
+      }
+      const dataAmount = await foundOrder.save();
       const data = await foundOrder.save();
       // get user
       // find this order in user's order's array
       // add this item to that array too
       const foundUser = await User.findOne({ username: req.session.username });
-      
-      // for () {
-        foundUser.orders.id(req.session.orderId).items.push(foundItem);
-      // }
+      foundUser.orders.id(req.session.orderId).items.push(foundItem);
       
       // console.log(foundUser.orders.id(req.session.orderId).items, " this is where we're trying to push ")
       const userData = await foundUser.save();
+
+      // loop through items and get amount of each and save in db
+
 
       // redirect
       res.redirect('/orders')
@@ -205,14 +232,18 @@ router.put('/cart/:itemid', async (req, res) => {
       // find the item and the order and delete item from order and save
       const foundItem = await Item.findById(req.params.itemid);
       const foundOrder = await Order.findById(req.session.orderId);
-      foundOrder.items.id(req.params.itemid).remove();
+      // foundOrder.items.id(req.params.itemid).remove();
+
+      // find index fo first time an item with this id appears
+      // remote item from array using .splice()
+
       const data = await foundOrder.save();
 
       // find the user and delete the item from the user.order and save
-      const foundUser = await User.findOne({ username: req.session.username });
-      foundUser.orders.id(req.session.orderId).items.id(req.params.itemid).remove()
-      const userData = await foundUser.save();
-    res.redirect('/orders/cart');
+      // const foundUser = await User.findOne({ username: req.session.username });
+      // foundUser.orders.id(req.session.orderId).items.id(req.params.itemid).remove()
+      // const userData = await foundUser.save();
+      res.redirect('/orders/cart');
   } catch (err) {
 
     res.send(err)

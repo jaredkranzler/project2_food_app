@@ -15,11 +15,11 @@
   <h5><a href="items/new">Admin</a></h5>
   <h5><a href="/auth/profile">Profile</a></h5>
   </div>
-  <div class="profile">
+  <% if (loggedIn) { %>
+    <div class="profile">
   <h5 class="username">Welcome <%=username%></h5>
   </div>
-  <div class="logout">
-  <% if (loggedIn) { %>
+    <div class="logout">
      <h5><a href="/auth/logout">Logout</a></h5>
   <% } else { %>
     <h5><a href="/auth/login">Login</a></h5><br>

@@ -119,12 +119,7 @@ router.get('/seed', (req, res) => {
 
 
 //-------------------------------------------------------
-router.get('/:id', (req, res) => {
-  res.render('home.ejs', { 
-      username: req.session.username,
-      loggedIn: req.session.loggedIn
-  });
-});
+
 //-------------------------------------------------------
 
 

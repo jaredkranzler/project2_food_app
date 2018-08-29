@@ -6,8 +6,13 @@
 
 <h1> Your Order History</h1>
 <h5>****Add reorder button that connects to checkout****</h5>
-
-
+    <section>
+      <div class='orderHistory'>  
+        <% for(let i = 0; i < orders.length; i++) { %>
+          <h3><%=orders[i]%></h3>
+       <%}%>
+      </div>
+    </section>
 
 
 </main>

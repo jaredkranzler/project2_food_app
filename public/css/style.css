@@ -4,7 +4,24 @@ body {
   background-color: #f2f2f220;
   margin-left: -10px;
 }
+.homeList {
+  list-style-type: none;
 
+}
+.oh{
+  display: flex;
+  justify-content: center;
+  border: 3px solid red;
+  background: red;
+
+}
+.orderHistory{
+  border: 3px solid green;
+}
+.historyHeader {
+  border: 3px solid black;
+  font-size: 40px;
+}
 a:link {
 color: #121212;
 }

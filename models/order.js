@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Item = require('./item');
+const OrderItem = require('./orderItem');
 
 
 const orderSchema = mongoose.Schema({
@@ -8,7 +9,9 @@ const orderSchema = mongoose.Schema({
     default: Date.now
   },
   newOrder: Boolean,
-  items: [Item.schema]
+  items: [OrderItem.schema],
+  tax: Number,
+  subTotal: Number
 });
 
 // create a model based on the schema, this lets us use mongoose methods

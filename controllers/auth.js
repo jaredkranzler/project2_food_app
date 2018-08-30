@@ -58,6 +58,7 @@ router.post('/login', (request, response) => {
   
   User.findOne({username: request.body.username}, (err, user) => {
     if(user){ // if user was found
+      console.log(user, "this is the user that we found")
       if(bcrypt.compareSync(request.body.password, user.password)) {
         request.session.username = user.username;
         request.session.loggedIn = true;
@@ -83,7 +84,7 @@ router.post('/login', (request, response) => {
 router.post('/register', (request, response) => {
   const password = request.body.password;
   const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-
+  
 
   // PREVENT DUPE USERNAMES
   // if a user exists in the db with the desired username

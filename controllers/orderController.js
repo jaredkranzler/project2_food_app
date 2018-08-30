@@ -1,38 +1,14 @@
 const express = require('express');
 const router  = express.Router();
+const bcrypt  = require('bcrypt');
 
 //-------------------------------------------------------------------------
 // Require the model
 const Order  = require('../models/order');
 const Item = require('../models/item');
 const User = require('../models/user')
+const OrderItem = require('../models/orderItem');
 //-------------------------------------------------------------------------
-
-// Home --> order history page
-// router.get('/', async (req, res, next) => {
-//   try {
-//     const foundUser = await User.findOne({ username: req.session.username });
-//     console.log(foundUser)
-
-//     res.send("check the terminal")
-
-
-//     // const foundUserOrder = await foundUser.findById(orders.id);
-//     // const foundOrder = await Order.findById(orders.id);
-//     // for (let i = 0; i < foundUserOrder.length; i++){
-//     //   if (foundUserOrder[i] === foundOrder[i]) {
-//     //   }
-//     // }
-//     //     res.render('home.ejs', { 
-//     //       orders: foundOrder,
-//     //       items: foundOrder.items,
-//     //       username: req.session.username,
-//     //       loggedIn: req.session.loggedIn
-//     //     });
-//   }catch (err) {
-//     next(err)
-//   }
-// })
 
 // ORDER SHOW ROUTE
 // URL should be /cart (GET /orders/cart), since you could store Order ID in session
@@ -81,6 +57,7 @@ router.get('/', async (req, res, next)=>{
     try {
       const foundUser = await User.findOne({ username: req.session.username });
       const foundAllItem = await Item.find({});
+
       res.render('orders/index.ejs', {
         orderId: req.session.orderId,
         items: foundAllItem,
@@ -171,33 +148,38 @@ router.post('/additem', async (req, res, next) => {
       // push into items array in the currently open order
       // which should be an Order (model) that was previously creatd
 
-      // get the item we are trying to add in this variable
-      const foundItem = await Item.findById(req.body.itemid);
-      // console.log(foundItem, "foundItem in POST /orders/additem");
-
+    
       // get current order object from database
-      const foundOrder = await Order.findById(req.session.orderId);
-      // console.log(foundOrder, "foundOrder in POST /orders/additem");
+      const foundItem = await Item.findById(req.body.itemid);
+      // push item into items array of current order object you just got from db (and save)   
+      const foundOrder = await Order.findById(req.session.orderId);      // console.log(foundOrder, "foundOrder in POST /orders/additem");
 
-      // push item into items array of current order object you just got from db (and save)      
-      // foundOrder.items.push(foundItem);
-      for (let i = 0; i < req.body.amount; i++) {
-        foundOrder.items.push(foundItem);
-      }
-      const dataAmount = await foundOrder.save();
-      const data = await foundOrder.save();
       // get user
-      // find this order in user's order's array
-      // add this item to that array too
       const foundUser = await User.findOne({ username: req.session.username });
-      foundUser.orders.id(req.session.orderId).items.push(foundItem);
+
+      for (let i = 0; i < req.body.amount; i++) {
+        const createOrderItem = await OrderItem.create(
+          {
+            name: foundItem.name,
+            image: foundItem.image,
+            body: foundItem.body,
+            price: foundItem.price,
+            amount: foundItem.amount,
+            itemCode: req.body.itemid
+          }
+        );
+        foundOrder.items.push(createOrderItem);
+        // add to this order in user's order's array
+        foundUser.orders.id(req.session.orderId).items.push(createOrderItem);
+      }
+      // console.log(foundOrder)
+
+      const data = await foundOrder.save();
       
       // console.log(foundUser.orders.id(req.session.orderId).items, " this is where we're trying to push ")
       const userData = await foundUser.save();
 
       // loop through items and get amount of each and save in db
-
-
       // redirect
       res.redirect('/orders')
 
@@ -230,19 +212,21 @@ router.post('/additem', async (req, res, next) => {
 router.put('/cart/:itemid', async (req, res) => {
   try {
       // find the item and the order and delete item from order and save
-      const foundItem = await Item.findById(req.params.itemid);
+      const foundOrderItem = await OrderItem.findById(req.params.itemid);
       const foundOrder = await Order.findById(req.session.orderId);
-      // foundOrder.items.id(req.params.itemid).remove();
+            console.log(foundOrder, 'this is foundOrder')
+            console.log(foundOrderItem, '------>founditem-------------')    
 
+      foundOrder.items.id(req.params.itemid).remove();
+      console.log(req.params.itemid, "req.params.itemid in the house yall!! what what!")
       // find index fo first time an item with this id appears
-      // remote item from array using .splice()
-
+      // remove item from array using .splice()
       const data = await foundOrder.save();
 
       // find the user and delete the item from the user.order and save
-      // const foundUser = await User.findOne({ username: req.session.username });
-      // foundUser.orders.id(req.session.orderId).items.id(req.params.itemid).remove()
-      // const userData = await foundUser.save();
+      const foundUser = await User.findOne({ username: req.session.username });
+      foundUser.orders.id(req.session.orderId).items.id(req.params.itemid).remove()
+      const userData = await foundUser.save();
       res.redirect('/orders/cart');
   } catch (err) {
 

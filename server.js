@@ -7,6 +7,8 @@ const PORT = process.env.PORT || 3000;
 const User = require('./models/user')
 const Order  = require('./models/order');
 const Item = require('./models/item');
+const OrderItem = require('./models/orderItem');
+
 // db connection code
 require('./db/db');
 

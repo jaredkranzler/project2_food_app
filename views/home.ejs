@@ -1,20 +1,35 @@
 
 <%- include('partials/header'); -%>
-<div class="container">
+<div class="oh">
 
 <main class="main">
+  <section>
+    <div class='orderHistory'>  
+      <div class="historyHeader"><h1> Your Order History </h1></div>
 
-<h1> Your Order History</h1>
-<h5>****Add reorder button that connects to checkout****</h5>
-    <section>
-      <div class='orderHistory'>  
+      <ul>
         <% for(let i = 0; i < orders.length; i++) { %>
-          <h3><%=orders[i]%></h3>
-       <%}%>
-      </div>
-    </section>
+          <li><div class="box">      
+            <div class ="text">
+              <h2>Order#: <%=orders[i]._id%></h3>
+              <h5><%=orders[i].orderDate%></h5>
+            </div>
+            <% for(let a = 0; a < orders[i].items.length; a++){ %>
+              <div class="image">
+                <img src="<%=orders[i].items[a].image%>">
+              </div>
 
-
+              <div class ="text">
+                <h3><%=orders[i].items[a].name%></h3>
+                <h3><%=orders[i].items[a].price%></h3>
+              </div>
+              <% } %>
+            
+          </div></li>
+        <%}%>
+      </ul>
+    </div>
+  </section>
 </main>
 </div>
 <end class="footer">

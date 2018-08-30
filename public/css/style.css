@@ -13,7 +13,6 @@ body {
   justify-content: center;
   border: 3px solid red;
   background: red;
-
 }
 .orderHistory{
   border: 3px solid green;
@@ -140,6 +139,7 @@ ul {
 .box {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   width: 600px;
   align-items: center;
   margin: 0 auto;
@@ -157,12 +157,18 @@ ul {
   margin: 20px 0 20px 0;
 }
 
+.head {
+background-color: lightgrey;
+width: 100%;
+}
+
 .text {
   width: 300px;
   word-wrap: normal;
   margin-bottom: 30px;
   margin-top: 10px;
-
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .admin {

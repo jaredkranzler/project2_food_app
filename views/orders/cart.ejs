@@ -35,12 +35,16 @@
                 <input type="number" name="<%items[i].amountInOrder%>" placeholder="<%=items[i].amountInOrder%>"/>
                 <input type="submit" value="update item"/>
               </form>
+
+          <%= message%>
+      
         <% } %>
             </div>
           </div></li>
       </ul>
-        
       </section>
+
+
       <section>
         <% const totalArray = [];%>
         <% let sum = 0; %>

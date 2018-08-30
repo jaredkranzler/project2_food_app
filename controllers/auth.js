@@ -124,42 +124,50 @@ router.post('/register', (request, response) => {
 
 
 
-router.get('/profile', (request, response) => {
-  User.findOne({username: request.session.username}, (err, foundUser) => {
-    console.log(foundUser, " this is foundUser in GET /auth/profile")
-    response.render('auth/profile.ejs', {
-      userData: foundUser,
-      username: request.session.username,
-      loggedIn: request.session.loggedIn
-    });
-  });
-});
-
-
-
-// maybe make it so password can be changed/updated
-
-router.post('/profile', (request, response) => {
-  const password = request.body.password;
-  const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-
-  // Create an object to enter into the user model
-  const userDbEntry = {};
-  userDbEntry.username = request.body.username;
-  userDbEntry.password = passwordHash;
-
-  // PREVENT DUPE USERNAMES
-  // if a user exists in the db with the desired username
-  User.find({username: request.body.username}, (err, foundUsers) => {
-      User.create(userDbEntry, (err, user) => {
-        request.session.username = user.username;
-        request.session.loggedIn = true;
-        console.log("update");
-        response.redirect('auth/profile'); // REDIRECT SHOULD TAKE A URL
+router.get('/profile', (req, res) => {
+  if(!req.session.username){ 
+    req.session.message = 'please login first';
+    res.redirect('/auth/login');
+  }else {
+    User.findOne({username: req.session.username}, (err, foundUser) => {
+      console.log(foundUser, " this is foundUser in GET /auth/profile")
+      res.render('auth/profile.ejs', {
+        userData: foundUser,
+        username: req.session.username,
+        loggedIn: req.session.loggedIn
       });
-  });
+    });
+  }
 });
 
+
+router.use((request, response, next) => {
+  if(!request.session.username){ 
+    request.session.message = 'please login first';
+    response.redirect('/auth/login');
+  }else {
+    router.post('/profile', (request, response) => {
+      const password = request.body.password;
+      const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+    
+      // Create an object to enter into the user model
+      const userDbEntry = {};
+      userDbEntry.username = request.body.username;
+      userDbEntry.password = passwordHash;
+    
+      // PREVENT DUPE USERNAMES
+      // if a user exists in the db with the desired username
+      User.find({username: request.body.username}, (err, foundUsers) => {
+          User.create(userDbEntry, (err, user) => {
+            request.session.username = user.username;
+            request.session.loggedIn = true;
+            console.log("update");
+            response.redirect('auth/profile'); // REDIRECT SHOULD TAKE A URL
+          });
+      });
+    });
+  }
+});
 
 
 // Logging out

@@ -33,16 +33,21 @@ router.get('/cart', async (req, res) => {
   
 
   try { 
-    if (!req.session.orderId){
-      res.redirect('/')
-    }else {
-      const foundOrder = await Order.findById(req.session.orderId); 
-      res.render('orders/cart.ejs', {
-        orders: foundOrder,
-        items: foundOrder.items,
-        username: req.session.username,
-        loggedIn: req.session.loggedIn
-      });
+    if(!req.session.username){ 
+        req.session.message = 'please login first';
+        res.redirect('/auth/login');
+    } else {
+      if (!req.session.orderId){
+        res.redirect('/orders')
+      }else {
+        const foundOrder = await Order.findById(req.session.orderId); 
+        res.render('orders/cart.ejs', {
+          orders: foundOrder,
+          items: foundOrder.items,
+          username: req.session.username,
+          loggedIn: req.session.loggedIn
+        });
+      }
     }
   } catch (err) {
     console.log(err)
@@ -55,15 +60,20 @@ router.get('/cart', async (req, res) => {
 // list of items with button to add -- this route is almost done as is
 router.get('/', async (req, res, next)=>{
     try {
-      const foundUser = await User.findOne({ username: req.session.username });
-      const foundAllItem = await Item.find({});
+      if(!req.session.username){ 
+        req.session.message = 'please login first';
+        res.redirect('/auth/login');
+      }else {
+        const foundUser = await User.findOne({ username: req.session.username });
+        const foundAllItem = await Item.find({});
 
-      res.render('orders/index.ejs', {
-        orderId: req.session.orderId,
-        items: foundAllItem,
-        username: req.session.username,
-        loggedIn: req.session.loggedIn
-      });
+        res.render('orders/index.ejs', {
+          orderId: req.session.orderId,
+          items: foundAllItem,
+          username: req.session.username,
+          loggedIn: req.session.loggedIn
+        });
+      }
     } catch (err) {
        next(err)
     }
@@ -211,23 +221,20 @@ router.post('/additem', async (req, res, next) => {
 // Remove from Cart
 router.put('/cart/:itemid', async (req, res) => {
   try {
+
       // find the item and the order and delete item from order and save
       const foundOrderItem = await OrderItem.findById(req.params.itemid);
       const foundOrder = await Order.findById(req.session.orderId);
-            console.log(foundOrder, 'this is foundOrder')
-            console.log(foundOrderItem, '------>founditem-------------')    
-
       foundOrder.items.id(req.params.itemid).remove();
-      console.log(req.params.itemid, "req.params.itemid in the house yall!! what what!")
-      // find index fo first time an item with this id appears
-      // remove item from array using .splice()
       const data = await foundOrder.save();
 
       // find the user and delete the item from the user.order and save
       const foundUser = await User.findOne({ username: req.session.username });
       foundUser.orders.id(req.session.orderId).items.id(req.params.itemid).remove()
       const userData = await foundUser.save();
+
       res.redirect('/orders/cart');
+
   } catch (err) {
 
     res.send(err)
@@ -267,19 +274,19 @@ router.delete('/:id', async (req, res, next) => {
 
 // ---------------------------------------------
 // UPDATE PUT - update items in cart and order in database
-router.put('/update/:id', async (req, res, next)=>{
-  try {
-    const foundOrder = await Order.findById(req.session.orderId)
-    const orderItem = foundOrder.items.id(req.params.itemid)
-    foundOrder.Items.amountInOrder.splice(orderItem.amountInOrder);
-    const data = await foundOrder.items.save();
-    res.redirect('/orders/cart');
+// router.put('/update/:id', async (req, res, next)=>{
+//   try {
+//     const foundOrder = await Order.findById(req.session.orderId)
+//     const foundOrderItem = OrderItems.(req.params.itemid)
+//     foundOrder.Items.amountInOrder.splice(orderItem.amountInOrder);
+//     const data = await foundOrder.items.save();
+//     res.redirect('/orders/cart');
 
-  } catch (err) {
-    next(err)
-    res.send(err)
-    }
-});
+//   } catch (err) {
+//     next(err)
+//     res.send(err)
+//     }
+// });
 
 //--------------------------------------------------------------------------------------
 module.exports = router;

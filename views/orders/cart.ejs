@@ -26,7 +26,7 @@
 
             <div class ="text">
               <h3><%=items[i].name%></h3>
-              <h3><%=items[i].body%></h3>
+              <h3 class="aboutItem"><%=items[i].body%></h3>
               <h3><%=items[i].price%></h3>
               <form action="/orders/cart/<%=items[i].id%>?_method=PUT" method="post">
                 <input type="submit" value="Delete item"/>
@@ -35,8 +35,6 @@
                 <input type="number" name="<%items[i].amountInOrder%>" placeholder="<%=items[i].amountInOrder%>"/>
                 <input type="submit" value="update item"/>
               </form>
-
-          <%= message%>
       
         <% } %>
             </div>

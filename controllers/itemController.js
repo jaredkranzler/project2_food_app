@@ -7,11 +7,7 @@ const Item  = require('../models/item');
 const Order = require('../models/order');
 const User = require('../models/user');
 
-router.use((req, resp, next) => {
- if(!req.session.username){ 
-          req.session.message = 'please login first';
-          res.redirect('/auth/login');
-        }else {
+
 // router level middleware to keep out everybody but admin
 router.use((request, response, next) => {
   if (request.session.username !== 'admin'){
@@ -181,8 +177,6 @@ router.put('/:id', async (req, res, next)=>{
     }
 });
 
-}
-})
 // --------------------------------------------------------------------------------
 module.exports = router;
 // --------------------------------------------------------------------------------

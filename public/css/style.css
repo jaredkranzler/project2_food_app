@@ -1,7 +1,7 @@
 body {
   text-align: center;
   font-family: tinos;
-  background-color: #f2f2f220;
+  background-color: #f2f2f2;
   margin-left: -10px;
 }
 .homeList {
@@ -12,13 +12,15 @@ body {
   display: flex;
   justify-content: center;
   border: 3px solid red;
-  background: red;
 }
 .orderHistory{
-  border: 3px solid green;
+  border: 3px solid #A6382C;
+}
+.menuHeader {
+ font-size: 40px;
+ margin-left: -40px;
 }
 .historyHeader {
-  border: 3px solid black;
   font-size: 40px;
 }
 a:link {
@@ -82,7 +84,6 @@ h5{
   margin-top: 980px;
   margin-left: -10px;
   border: 1px solid #0d0d0d70;
-
 }
 header, footer {                            
   background-color: #A6382C;  
@@ -125,6 +126,8 @@ ul {
   display: flex;
   justify-content: center;
   text-shadow: 0px 3px 10px #1B1B1B30;
+  box-shadow: 0px 3px 10px #1B1B1B;
+  background: #A6382C;
 
 /*  border: 2px solid purple;
 */}
@@ -146,13 +149,15 @@ ul {
   border: 1px solid black;
   margin-left: -40px;
   margin-bottom: 20px;
+  box-shadow: 0px 3px 10px #1B1B1B20;
+  background: white;
 }
 .box:hover {
-  background-color: #ffc90080;
-  text-shadow: 0px 3px 10px #1B1B1B90;
-
-
+  background-color: white;
+  color: black;
+  text-shadow: 0px 3px 10px #1B1B1B60;
 }
+
 .image {
   margin: 20px 0 20px 0;
 }

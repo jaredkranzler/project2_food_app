@@ -7,8 +7,9 @@
 
 <main class="main">
 <% if (orderId) { -%>
-
       <ul>
+          <div class="menuHeader"><h1>Hungry? </h1></div>
+
         <% for (let i = 0; i < items.length; i++) { %>    
           <div class="box">
 
@@ -18,7 +19,7 @@
 
             <div class ="text">
               <h3><%=items[i].name%></h3>
-              <h3><%=items[i].body%></h3>
+              <p class="aboutItem"><%=items[i].body%></p>
               <h3><%=items[i].price%></h3>
               <form action="/orders/additem" method="POST">
                 <input type="number" name="amount" value="<%=items[i].amountInOrder%>"/>

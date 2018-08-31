@@ -1,45 +1,43 @@
 
 <%- include('partials/header'); -%>
 <div class="oh">
-
-<main class="main">
-  <section>
-    <div class='orderHistory'>  
-      <div class="historyHeader"><h1> Your Order History </h1></div>
-
-      <ul>
-        <% for(let i = 0; i < orders.length; i++) { %>
-
-          <li><div class="box">     
-            <div class ="head">
-              <h2>Order#: <%=orders[i]._id%></h3>
-              <h5><%=orders[i].orderDate%></h5>
-            </div>
-
-            <% for(let a = 0; a < orders[i].items.length; a++){ %>
-
-              <div class="image">
-                <img src="<%=orders[i].items[a].image%>">
+  <main class="main">
+    <section>
+      <div class='orderHistory'>  
+        <div class="historyHeader"><h1> Your Order History </h1></div>
+        <ul>
+          <% for(let i = 0; i < orders.length; i++) { %>
+  
+            <li><div class="box">     
+              <div class ="head">
+                <h2>Order#: <%=orders[i]._id%></h3>
+                <h5><%=orders[i].orderDate%></h5>
+              </div>
+  
+              <% for(let a = 0; a < orders[i].items.length; a++){  %>
+  
+                <div class="image">
+                  <img src="<%=orders[i].items[a].image%>">
+                </div>
+  
+                <div class ="text">
+                  <h3><%=orders[i].items[a].name%></h3>
+                  <h3><%=orders[i].items[a].price%></h3>
+                </div>
+                <% } %>
+  
+              <div class="text">
+                <h3>Subtotal:</h3>
+                <h3>Tax:</h3>
+                <h2>Total:</h2>
               </div>
 
-              <div class ="text">
-                <h3><%=orders[i].items[a].name%></h3>
-                <h3><%=orders[i].items[a].price%></h3>
-              </div>
-              <% } %>
-
-            <div class="text">
-              <h3>Subtotal:</h3>
-              <h3>Tax:</h3>
-              <h2>Total:</h2>
-            </div>
-
-          </div></li>
-        <%}%>
-      </ul>
-    </div>
-  </section>
-</main>
+            </div></li>
+          <%}%>
+        </ul>
+      </div>
+    </section>
+  </main>
 </div>
 <end class="footer">
   SITE © 2018 by Jared & Steve 

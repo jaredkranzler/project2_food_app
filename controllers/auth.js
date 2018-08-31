@@ -141,11 +141,11 @@ router.get('/profile', (req, res) => {
 });
 
 
-router.use((request, response, next) => {
-  if(!request.session.username){ 
-    request.session.message = 'please login first';
-    response.redirect('/auth/login');
-  }else {
+// router.use((request, response, next) => {
+//   if(!request.session.username){ 
+//     request.session.message = 'please login first';
+//     response.redirect('/auth/login');
+//   }else {
     router.post('/profile', (request, response) => {
       const password = request.body.password;
       const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
@@ -166,8 +166,8 @@ router.use((request, response, next) => {
           });
       });
     });
-  }
-});
+//   }
+// });
 
 
 // Logging out
